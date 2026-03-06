@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Day 6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>📚 Student Dashboard</h1>
+            <div class="header-info">
+                <span class="user-name" id="userName">John Doe</span>
+                <span class="student-id" id="studentId">1BR20CS123</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#dashboard" class="active">Dashboard</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#assignments">Assignments</a></li>
+                <li><a href="#grades">Grades</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Summary Cards -->
+        <section class="summary-section">
+            <div class="summary-card">
+                <div class="card-icon">4.15</div>
+                <div class="card-content">
+                    <h3>GPA</h3>
+                    <p>Overall Grade Point Average</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">128</div>
+                <div class="card-content">
+                    <h3>Credits</h3>
+                    <p>Total Credits Completed</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">8</div>
+                <div class="card-content">
+                    <h3>Courses</h3>
+                    <p>Currently Enrolled</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">85%</div>
+                <div class="card-content">
+                    <h3>Attendance</h3>
+                    <p>Class Participation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="courses-section">
+            <h2>📖 Enrolled Courses</h2>
+            <div class="courses-grid" id="coursesList">
+                <!-- Course cards will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Assignments Section -->
+        <section id="assignments" class="assignments-section">
+            <h2>📝 Upcoming Assignments</h2>
+            <div class="assignments-list" id="assignmentsList">
+                <!-- Assignment items will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="grades" class="performance-section">
+            <h2>📊 Performance Overview</h2>
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <h3>Best Performing Subject</h3>
+                    <p class="performance-value">Data Structures</p>
+                    <p class="performance-grade">A+ (4.0)</p>
+                </div>
+                <div class="performance-card">
+                    <h3>Average Grade</h3>
+                    <p class="performance-value">A (3.9)</p>
+                    <p class="performance-grade">Excellent</p>
+                </div>
+                <div class="performance-card">
+                    <h3>Assignment Completion</h3>
+                    <p class="performance-value">92%</p>
+                    <p class="performance-grade">Very Good</p>
+                </div>
+                <div class="performance-card">
+                    <h3>Test Average</h3>
+                    <p class="performance-value">88%</p>
+                    <p class="performance-grade">Good</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 ThaniyaTechnologies Student Dashboard. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
