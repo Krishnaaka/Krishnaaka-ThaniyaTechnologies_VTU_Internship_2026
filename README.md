@@ -10,3 +10,4 @@ Usage
 - Use the "Clear All" button to remove all users (resets samples).
 
 No build steps required.
+allowto User crud operation.
