@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishna A K — Portfolio</title>
+  <meta name="description" content="Portfolio of Krishna Adiveppa Kalasannaavara — Cloud Security Engineer, Full Stack Developer & AI/ML Enthusiast." />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">KAK<span class="dot">.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-btn" id="themeBtn" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+        <a href="mailto:krishnak1391@gmail.com" class="btn-hire">Hire Me</a>
+      </div>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-text" data-reveal>
+        <div class="hero-badge"><span class="badge-dot"></span>Available for Internships &amp; Roles</div>
+        <h1 class="hero-name">Krishna<br/><span class="gradient-text">Adiveppa K.</span></h1>
+        <div class="hero-typed-wrap">
+          <span class="typed-prefix">I'm a </span>
+          <span class="typed-text" id="typedText"></span><span class="typed-cursor">|</span>
+        </div>
+        <p class="hero-tagline">Learning by building — turning ideas into real, secure, scalable software.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
+          <a href="https://www.linkedin.com/in/krishna-a-k" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://github.com/Krishnaaka" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/krishna-a-k" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:krishnak1391@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" title="Credly Badges"><i class="fas fa-certificate"></i></a>
+        </div>
+      </div>
+      <div class="hero-image" data-reveal-delay>
+        <div class="img-ring">
+          <div class="img-glow"></div>
+          <img src="profile.jpg" alt="Krishna Adiveppa Kalasannaavara" class="profile-img" onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex'"/>
+          <div class="avatar-fallback" id="avatarFallback"><i class="fas fa-user"></i></div>
+        </div>
+        <div class="floating-card card-1"><i class="fab fa-python"></i> Python</div>
+        <div class="floating-card card-2"><i class="fab fa-aws"></i> AWS</div>
+        <div class="floating-card card-3"><i class="fas fa-brain"></i> AI / ML</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ ABOUT ═══════════════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">Who I Am</span>
+        <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text" data-reveal>
+          <p>I'm a <strong>Computer Science &amp; Business Systems</strong> undergraduate at Srinivas Institute of Technology, Mangalore. I believe in <em>"learning by building"</em> — turning academic knowledge into real-world applications.</p>
+          <p>I have hands-on experience in <strong>full-stack development</strong>, <strong>cloud engineering (AWS, OCI)</strong>, and <strong>AI/ML</strong>. I delivered a ZeroTrust security solution during my virtual internship at Zscaler and built RESTful APIs, data pipelines, and AI-powered applications across multiple internships.</p>
+          <p>I'm actively seeking roles where I can contribute to building practical, secure, AI-integrated backend systems.</p>
+          <div class="about-location"><i class="fas fa-map-marker-alt"></i> Udupi, Karnataka, India</div>
+        </div>
+        <div class="about-stats" data-reveal-delay>
+          <div class="stat-card-about"><span class="stat-num" data-target="3">0</span><span class="stat-plus">+</span><p>Internships</p></div>
+          <div class="stat-card-about"><span class="stat-num" data-target="5">0</span><span class="stat-plus">+</span><p>Certifications</p></div>
+          <div class="stat-card-about"><span class="stat-num gradient-text">7.67</span><p>CGPA</p></div>
+          <div class="stat-card-about"><span class="stat-num" data-target="4">0</span><span class="stat-plus">+</span><p>Projects</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SKILLS ═══════════════════ -->
+  <section class="section section-alt" id="skills">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">What I Know</span>
+        <h2 class="section-title">Technical <span class="gradient-text">Skills</span></h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group" data-reveal>
+          <div class="skill-group-header"><i class="fas fa-cloud"></i> Cloud &amp; DevOps</div>
+          <div class="skill-tags">
+            <span class="stag"><i class="fab fa-aws"></i> AWS EC2</span>
+            <span class="stag"><i class="fab fa-aws"></i> ECS / ECR</span>
+            <span class="stag"><i class="fab fa-aws"></i> S3 / IAM</span>
+            <span class="stag"><i class="fab fa-docker"></i> Docker</span>
+            <span class="stag">☁ OCI</span>
+            <span class="stag"><i class="fas fa-network-wired"></i> VPC / Fargate</span>
+          </div>
+        </div>
+        <div class="skill-group" data-reveal>
+          <div class="skill-group-header"><i class="fas fa-code"></i> Programming</div>
+          <div class="skill-tags">
+            <span class="stag"><i class="fab fa-python"></i> Python</span>
+            <span class="stag"><i class="fas fa-database"></i> SQL</span>
+            <span class="stag"><i class="fab fa-js"></i> JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group" data-reveal-delay>
+          <div class="skill-group-header"><i class="fas fa-server"></i> Web &amp; Backend</div>
+          <div class="skill-tags">
+            <span class="stag"><i class="fas fa-bolt"></i> FastAPI</span>
+            <span class="stag"><i class="fab fa-react"></i> React</span>
+            <span class="stag"><i class="fas fa-plug"></i> REST APIs</span>
+            <span class="stag"><i class="fab fa-html5"></i> HTML/CSS</span>
+            <span class="stag"><i class="fas fa-layer-group"></i> FullStack</span>
+          </div>
+        </div>
+        <div class="skill-group" data-reveal-delay>
+          <div class="skill-group-header"><i class="fas fa-brain"></i> AI / ML Tools</div>
+          <div class="skill-tags">
+            <span class="stag">👁 OpenCV</span>
+            <span class="stag">🤖 YOLOv8</span>
+            <span class="stag">😶 DeepFace</span>
+            <span class="stag">🎙 Librosa / Vosk</span>
+            <span class="stag">🌊 Streamlit</span>
+            <span class="stag">🦙 Ollama</span>
+            <span class="stag">🧠 NLP</span>
+          </div>
+        </div>
+        <div class="skill-group" data-reveal>
+          <div class="skill-group-header"><i class="fas fa-tools"></i> Tools &amp; OS</div>
+          <div class="skill-tags">
+            <span class="stag"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+            <span class="stag"><i class="fab fa-linux"></i> Linux</span>
+            <span class="stag"><i class="fas fa-terminal"></i> VS Code</span>
+            <span class="stag">📊 Notion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ EXPERIENCE ═══════════════════ -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">My Journey</span>
+        <h2 class="section-title">Work <span class="gradient-text">Experience</span></h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="tc-header">
+              <div>
+                <h3 class="tc-role">GenAI &amp; Analytics Intern</h3>
+                <p class="tc-company"><i class="fas fa-building"></i> Learners Byte</p>
+              </div>
+              <span class="tc-badge current">Present</span>
+            </div>
+            <p class="tc-date"><i class="fas fa-calendar"></i> Jan 2026 – Present</p>
+            <ul class="tc-points">
+              <li>Working on Python-based data analysis and AI-driven analytics solutions.</li>
+              <li>Building and evaluating generative AI models for real-world business use cases.</li>
+              <li>Implementing data visualization dashboards and automated reporting pipelines.</li>
+            </ul>
+            <div class="tc-tags"><span>Python</span><span>GenAI</span><span>Data Analysis</span><span>NLP</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="tc-header">
+              <div>
+                <h3 class="tc-role">Data Engineering Virtual Intern</h3>
+                <p class="tc-company"><i class="fas fa-building"></i> AWS Academy</p>
+              </div>
+              <span class="tc-badge aws">AWS</span>
+            </div>
+            <p class="tc-date"><i class="fas fa-calendar"></i> Jun 2025 – Sep 2025</p>
+            <ul class="tc-points">
+              <li>Built and managed data workflows using AWS services such as S3 and EC2.</li>
+              <li>Designed scalable data handling solutions and optimized data storage processes.</li>
+              <li>Supported data pipeline development and ensured efficient data processing.</li>
+            </ul>
+            <div class="tc-tags"><span>AWS S3</span><span>EC2</span><span>Data Pipelines</span><span>Cloud</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="tc-header">
+              <div>
+                <h3 class="tc-role">Full Stack Development Intern</h3>
+                <p class="tc-company"><i class="fas fa-building"></i> Thaniya Technologies</p>
+              </div>
+              <span class="tc-badge thaniya">Internship</span>
+            </div>
+            <p class="tc-date"><i class="fas fa-calendar"></i> Jun 2024 – Aug 2024</p>
+            <ul class="tc-points">
+              <li>Developed and maintained web applications using HTML, CSS, JavaScript, Python, and SQL.</li>
+              <li>Designed REST APIs and implemented seamless frontend–backend integration.</li>
+              <li>Debugged issues and improved application performance and user experience.</li>
+            </ul>
+            <div class="tc-tags"><span>HTML/CSS</span><span>JavaScript</span><span>Python</span><span>REST APIs</span><span>SQL</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PROJECTS ═══════════════════ -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">What I've Built</span>
+        <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card featured" data-reveal>
+          <div class="pc-ribbon">Featured</div>
+          <div class="pc-header">
+            <div class="pc-icon"><i class="fas fa-city"></i></div>
+            <div class="pc-links">
+              <a href="https://github.com/Krishnaaka" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <h3 class="pc-title">BrightCity — Smart Urban Development</h3>
+          <p class="pc-desc">A full-stack civic issue reporting platform enabling real-time complaint tracking for citizens and administrators. Features secure JWT authentication with role-based dashboards, containerized with Docker and deployed on AWS ECS Fargate with CloudWatch monitoring and IAM-based access control.</p>
+          <div class="pc-tech">
+            <span>React</span><span>FastAPI</span><span>JWT</span><span>Docker</span><span>AWS ECS</span><span>CloudWatch</span><span>IAM</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-reveal>
+          <div class="pc-header">
+            <div class="pc-icon" style="background:rgba(168,85,247,.15);color:#a855f7"><i class="fas fa-brain"></i></div>
+            <div class="pc-links">
+              <a href="https://github.com/Krishnaaka" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <h3 class="pc-title">Mental Health State Detection</h3>
+          <p class="pc-desc">Real-time emotion detection system using computer vision and NLP. Detects facial emotions via OpenCV + YOLOv8 + DeepFace, recognizes speech and audio patterns using Librosa and Vosk, and applies Transformer-based NLP for sentiment analysis — all via an interactive Streamlit UI with local LLM (Ollama).</p>
+          <div class="pc-tech">
+            <span>OpenCV</span><span>YOLOv8</span><span>DeepFace</span><span>Librosa</span><span>Vosk</span><span>Streamlit</span><span>Ollama</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-reveal-delay>
+          <div class="pc-header">
+            <div class="pc-icon" style="background:rgba(56,189,248,.15);color:#38bdf8"><i class="fab fa-aws"></i></div>
+            <div class="pc-links">
+              <a href="https://github.com/Krishnaaka" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <h3 class="pc-title">AWS Cloud Architectures</h3>
+          <p class="pc-desc">Implemented both traditional and serverless cloud architectures on AWS. Built EC2 + RDS environments and fully serverless stacks using API Gateway, Lambda, and DynamoDB. Also built custom VPCs with public subnets, internet gateways, and hosted web servers on EC2.</p>
+          <div class="pc-tech">
+            <span>EC2</span><span>RDS</span><span>Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>VPC</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-reveal-delay>
+          <div class="pc-header">
+            <div class="pc-icon" style="background:rgba(34,197,94,.15);color:#22c55e"><i class="fas fa-graduation-cap"></i></div>
+            <div class="pc-links">
+              <a href="https://github.com/Krishnaaka/Krishnaaka-ThaniyaTechnologies_VTU_Internship_2026" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <h3 class="pc-title">Student Dashboard — Full Stack</h3>
+          <p class="pc-desc">A premium student management dashboard with full CRUD operations, live search, sort and filter, grade analytics, dashboard stats, branch breakdown charts, and a responsive sidebar UI. Built through the Thaniya Technologies VTU Internship 2026 (Day 1–14).</p>
+          <div class="pc-tech">
+            <span>HTML/CSS</span><span>JavaScript</span><span>Node.js</span><span>REST APIs</span><span>Express</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="projects-cta" data-reveal>
+        <a href="https://github.com/Krishnaaka" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> View All on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ ACHIEVEMENTS ═══════════════════ -->
+  <section class="section" id="achievements">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">Milestones</span>
+        <h2 class="section-title">Achievements &amp; <span class="gradient-text">Awards</span></h2>
+      </div>
+      <div class="achievements-grid">
+        <div class="ach-card" data-reveal>
+          <div class="ach-icon"><i class="fas fa-trophy"></i></div>
+          <h3>Research Paper Publication</h3>
+          <p>Presented AI research paper on <em>"Mental Health State Detection using OpenCV &amp; Sentiment Analysis"</em> at an International Conference at SIT, May 2025.</p>
+        </div>
+        <div class="ach-card" data-reveal>
+          <div class="ach-icon" style="background:rgba(249,115,22,.1);color:var(--orange)"><i class="fas fa-medal"></i></div>
+          <h3>2nd Place — Decode the Code</h3>
+          <p>Achieved 2nd place in the Decode the Code Event organized by SSOSC, competing against multiple teams in identifying and fixing software bugs efficiently.</p>
+        </div>
+        <div class="ach-card" data-reveal-delay>
+          <div class="ach-icon" style="background:rgba(168,85,247,.1);color:var(--purple)"><i class="fas fa-flag"></i></div>
+          <h3>National Hackathon Participant</h3>
+          <p>Participated in the National ROOLATHON and SRINATHON Technology events at Valachil, Mangalore — showcasing innovative solutions at a national level.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CERTIFICATIONS ═══════════════════ -->
+  <section class="section section-alt" id="certifications">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">Verified Credentials</span>
+        <h2 class="section-title">Certifications &amp; <span class="gradient-text">Badges</span></h2>
+      </div>
+      <div class="cert-grid">
+        <div class="cert-card" data-reveal>
+          <div class="cert-icon"><i class="fab fa-aws"></i></div>
+          <h4>AWS Academy Cloud Foundations</h4>
+          <p>AWS Academy Graduate</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="cert-link">View Badge <i class="fas fa-external-link-alt"></i></a>
+        </div>
+        <div class="cert-card" data-reveal>
+          <div class="cert-icon" style="color:#f80000"><i class="fas fa-cloud"></i></div>
+          <h4>OCI 2025 Generative AI Professional</h4>
+          <p>Oracle Cloud Infrastructure Certified</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="cert-link">View Badge <i class="fas fa-external-link-alt"></i></a>
+        </div>
+        <div class="cert-card" data-reveal-delay>
+          <div class="cert-icon" style="color:#00bceb"><i class="fab fa-aws"></i></div>
+          <h4>AWS Educate ML Foundations</h4>
+          <p>Machine Learning Training Badge</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="cert-link">View Badge <i class="fas fa-external-link-alt"></i></a>
+        </div>
+        <div class="cert-card" data-reveal-delay>
+          <div class="cert-icon" style="color:#1c84c6"><i class="fab fa-python"></i></div>
+          <h4>Data Science Using Python</h4>
+          <p>SWAYAM NPTEL Certified</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="cert-link">View Badge <i class="fas fa-external-link-alt"></i></a>
+        </div>
+        <div class="cert-card" data-reveal>
+          <div class="cert-icon" style="color:#1ba0d7"><i class="fas fa-network-wired"></i></div>
+          <h4>Cisco Python Essentials</h4>
+          <p>Networking Academy Certified</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="cert-link">View Badge <i class="fas fa-external-link-alt"></i></a>
+        </div>
+        <div class="cert-card credly-cta" data-reveal>
+          <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+          <h4>View All Badges</h4>
+          <p>See all verified credentials on Credly</p>
+          <a href="https://www.credly.com/users/krishna-a-k" target="_blank" class="btn btn-primary" style="margin-top:1rem;font-size:.8rem;padding:.5rem 1rem">Open Credly <i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ EDUCATION ═══════════════════ -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">Academic Background</span>
+        <h2 class="section-title">My <span class="gradient-text">Education</span></h2>
+      </div>
+      <div class="edu-list">
+        <div class="edu-card" data-reveal>
+          <div class="edu-icon"><i class="fas fa-university"></i></div>
+          <div class="edu-info">
+            <h3>B.E. — Computer Science &amp; Business Systems</h3>
+            <p class="edu-inst">Srinivas Institute of Technology, Mangalore</p>
+            <p class="edu-meta"><span>2022 – 2026</span><span class="edu-gpa">CGPA: 7.67</span></p>
+          </div>
+        </div>
+        <div class="edu-card" data-reveal>
+          <div class="edu-icon"><i class="fas fa-school"></i></div>
+          <div class="edu-info">
+            <h3>Pre-University — PCMC (Science)</h3>
+            <p class="edu-inst">Govt PU College, Udupi</p>
+            <p class="edu-meta"><span>2020 – 2022</span><span class="edu-gpa">73%</span></p>
+          </div>
+        </div>
+        <div class="edu-card" data-reveal>
+          <div class="edu-icon"><i class="fas fa-book"></i></div>
+          <div class="edu-info">
+            <h3>SSLC — Secondary School</h3>
+            <p class="edu-inst">Christian High School, Udupi</p>
+            <p class="edu-meta"><span>2018 – 2020</span><span class="edu-gpa">76.16%</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CONTACT ═══════════════════ -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+        <p class="section-sub">I'm open to internships, projects, and collaborations. Drop a message!</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" data-reveal>
+          <div class="ci-item">
+            <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+            <div><p class="ci-label">Email</p><a href="mailto:krishnak1391@gmail.com">krishnak1391@gmail.com</a></div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon" style="background:rgba(34,197,94,.12);color:#22c55e"><i class="fas fa-phone"></i></div>
+            <div><p class="ci-label">Phone</p><a href="tel:+916360511291">+91 6360511291</a></div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon" style="background:rgba(56,189,248,.12);color:#38bdf8"><i class="fas fa-map-marker-alt"></i></div>
+            <div><p class="ci-label">Location</p><p>Udupi, Karnataka, India</p></div>
+          </div>
+          <div class="contact-socials">
+            <a href="https://github.com/Krishnaaka" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/krishna-a-k" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.credly.com/users/krishna-a-k" target="_blank"><i class="fas fa-certificate"></i></a>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm" data-reveal-delay>
+          <div class="form-row">
+            <div class="fg"><label>Name</label><input type="text" id="cName" placeholder="Your name" required /></div>
+            <div class="fg"><label>Email</label><input type="email" id="cEmail" placeholder="your@email.com" required /></div>
+          </div>
+          <div class="fg"><label>Subject</label><input type="text" id="cSubject" placeholder="Subject" /></div>
+          <div class="fg"><label>Message</label><textarea id="cMessage" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea></div>
+          <button type="submit" class="btn btn-primary btn-full"><i class="fas fa-paper-plane"></i> Send Message</button>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <p>Designed &amp; Built by <span class="gradient-text">Krishna Adiveppa Kalasannaavara</span> · 2026</p>
+      <p class="footer-sub">Cloud Security · Full Stack · AI/ML</p>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-top" id="backTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <script src="app.js"></script>
+</body>
+</html>
