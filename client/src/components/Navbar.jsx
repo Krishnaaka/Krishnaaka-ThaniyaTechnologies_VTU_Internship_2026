@@ -1,13 +1,36 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const links = ['About','Skills','Experience','Projects','Certifications','Contact']
+const links = ['About','Skills','Experience','Projects','Certifications','Education','Contact']
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress]  = useState(0)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
+  const [theme, setTheme] = useState(() => localStorage.getItem('pf-theme') || 'dark')
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('pf-theme', theme)
+    if (theme === 'light') {
+      document.documentElement.style.setProperty('--bg', '#f0f0f8')
+      document.documentElement.style.setProperty('--bg2', '#e8e8f4')
+      document.documentElement.style.setProperty('--surface', '#ffffff')
+      document.documentElement.style.setProperty('--card', '#ffffff')
+      document.documentElement.style.setProperty('--border', 'rgba(0,0,0,0.08)')
+      document.documentElement.style.setProperty('--text', '#1a1a2e')
+      document.documentElement.style.setProperty('--muted', '#5a5a7a')
+    } else {
+      document.documentElement.style.setProperty('--bg', '#050508')
+      document.documentElement.style.setProperty('--bg2', '#080810')
+      document.documentElement.style.setProperty('--surface', '#0e0e1a')
+      document.documentElement.style.setProperty('--card', '#12121f')
+      document.documentElement.style.setProperty('--border', 'rgba(255,255,255,0.06)')
+      document.documentElement.style.setProperty('--text', '#e8e8f0')
+      document.documentElement.style.setProperty('--muted', '#5a5a7a')
+    }
+  }, [theme])
 
   useEffect(() => {
     const onScroll = () => {
@@ -68,6 +91,15 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        {/* Theme toggle */}
+        <button onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+          title="Toggle theme"
+          style={{ background:'var(--card)', border:'1px solid var(--border)', color:'var(--text)', width:38, height:38, borderRadius:10, cursor:'none', fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', transition:'all .3s' }}
+          onMouseEnter={e => e.currentTarget.style.borderColor='var(--primary)'}
+          onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}>
+          {theme === 'dark' ? '☀' : '🌙'}
+        </button>
 
         {/* Hire Me */}
         <a href="mailto:krishnak1391@gmail.com" className="btn btn-primary" style={{ fontSize:'.82rem', padding:'.5rem 1.4rem' }}>
