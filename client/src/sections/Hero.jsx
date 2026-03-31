@@ -3,126 +3,145 @@ import { motion } from 'framer-motion'
 import { TypeAnimation } from 'react-type-animation'
 import { FiGithub, FiLinkedin, FiMail, FiArrowDown } from 'react-icons/fi'
 
+// ── Aurora animated background ──
+function Aurora() {
+  return (
+    <div style={{ position:'absolute', inset:0, zIndex:0, overflow:'hidden' }}>
+      {/* Animated aurora blobs */}
+      {[
+        { color:'124,109,255', size:900, x:'-10%', y:'-20%', dur:'12s', delay:'0s'  },
+        { color:'0,232,204',   size:700, x:'60%',  y:'30%',  dur:'15s', delay:'3s'  },
+        { color:'255,61,154',  size:600, x:'20%',  y:'50%',  dur:'18s', delay:'6s'  },
+        { color:'255,111,41',  size:500, x:'70%',  y:'-10%', dur:'10s', delay:'2s'  },
+      ].map((b,i)=>(
+        <div key={i} style={{
+          position:'absolute',
+          width:b.size, height:b.size,
+          left:b.x, top:b.y,
+          borderRadius:'50%',
+          background:`radial-gradient(circle,rgba(${b.color},0.18) 0%,transparent 70%)`,
+          filter:'blur(60px)',
+          animation:`auroraFloat${i} ${b.dur} ease-in-out infinite alternate`,
+          animationDelay:b.delay,
+        }}/>
+      ))}
+      {/* Grid lines */}
+      <div style={{
+        position:'absolute', inset:0,
+        backgroundImage:'linear-gradient(rgba(124,109,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,109,255,0.04) 1px,transparent 1px)',
+        backgroundSize:'60px 60px',
+      }}/>
+      {/* Vignette */}
+      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center,transparent 40%,var(--bg) 100%)' }}/>
+      <style>{`
+        @keyframes auroraFloat0{0%{transform:translate(0,0) scale(1)}100%{transform:translate(80px,-60px) scale(1.2)}}
+        @keyframes auroraFloat1{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(-60px,80px) scale(0.9)}}
+        @keyframes auroraFloat2{0%{transform:translate(0,0) scale(0.95)}100%{transform:translate(100px,40px) scale(1.15)}}
+        @keyframes auroraFloat3{0%{transform:translate(0,0) scale(1.05)}100%{transform:translate(-80px,-50px) scale(0.85)}}
+      `}</style>
+    </div>
+  )
+}
+
 export default function Hero() {
-  const canvasRef = useRef(null)
+  const mouseRef = useRef({ x:0, y:0 })
+  const glowRef  = useRef(null)
 
-  useEffect(() => {
-    let raf
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
-    resize()
-    window.addEventListener('resize', resize)
-
-    const N = 130
-    const pts = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.6 + 0.4,
-      vx: (Math.random() - .5) * .35,
-      vy: (Math.random() - .5) * .35,
-      c: Math.random() > .55 ? '124,109,255' : Math.random() > .5 ? '0,232,204' : '255,61,154',
-      a: Math.random() * .5 + .15,
-    }))
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      pts.forEach(p => {
-        p.x = (p.x + p.vx + canvas.width)  % canvas.width
-        p.y = (p.y + p.vy + canvas.height) % canvas.height
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${p.c},${p.a})`
-        ctx.fill()
-      })
-      for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const dx = pts[i].x - pts[j].x
-          const dy = pts[i].y - pts[j].y
-          const d  = Math.sqrt(dx * dx + dy * dy)
-          if (d < 110) {
-            ctx.beginPath()
-            ctx.moveTo(pts[i].x, pts[i].y)
-            ctx.lineTo(pts[j].x, pts[j].y)
-            ctx.strokeStyle = `rgba(124,109,255,${0.1 * (1 - d / 110)})`
-            ctx.lineWidth = .6
-            ctx.stroke()
-          }
-        }
+  // Mouse-tracking glow
+  useEffect(()=>{
+    const onMove = e=>{
+      mouseRef.current = {x:e.clientX, y:e.clientY}
+      if(glowRef.current){
+        glowRef.current.style.left = e.clientX + 'px'
+        glowRef.current.style.top  = e.clientY + 'px'
       }
-      raf = requestAnimationFrame(draw)
     }
-    draw()
-    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(raf) }
-  }, [])
+    window.addEventListener('mousemove', onMove)
+    return ()=>window.removeEventListener('mousemove', onMove)
+  },[])
 
-  const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: .7, delay, ease: [.25, .46, .45, .94] },
+  const fadeUp = (delay=0) => ({
+    initial:{opacity:0,y:35},
+    animate:{opacity:1,y:0},
+    transition:{duration:.8,delay,ease:[.22,1,.36,1]},
   })
 
   return (
-    <section id="hero" style={{ position:'relative', minHeight:'100vh', display:'flex', alignItems:'center', overflow:'hidden', paddingTop:88 }}>
-      <canvas ref={canvasRef} style={{ position:'absolute', inset:0, zIndex:0, opacity:.85 }} />
+    <section id="hero" style={{position:'relative',minHeight:'100vh',display:'flex',alignItems:'center',overflow:'hidden',paddingTop:88}}>
+      <Aurora/>
 
-      {/* Blobs */}
-      <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none' }}>
-        <div className="blob-glow" style={{ width:700, height:700, top:'-15%', left:'-8%', background:'radial-gradient(circle,rgba(124,109,255,0.13),transparent 70%)' }} />
-        <div className="blob-glow" style={{ width:550, height:550, bottom:'-10%', right:'-5%', background:'radial-gradient(circle,rgba(0,232,204,0.1),transparent 70%)' }} />
-        <div className="blob-glow" style={{ width:350, height:350, top:'35%', right:'30%', background:'radial-gradient(circle,rgba(255,61,154,0.08),transparent 70%)' }} />
-      </div>
+      {/* Mouse follower glow */}
+      <div ref={glowRef} style={{
+        position:'fixed',zIndex:0,pointerEvents:'none',
+        width:400,height:400,borderRadius:'50%',
+        background:'radial-gradient(circle,rgba(124,109,255,0.08),transparent 70%)',
+        transform:'translate(-50%,-50%)',
+        transition:'left .12s linear,top .12s linear',
+      }}/>
 
-      {/* Grid overlay */}
-      <div style={{ position:'absolute', inset:0, zIndex:0, backgroundImage:'linear-gradient(rgba(124,109,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(124,109,255,0.025) 1px,transparent 1px)', backgroundSize:'64px 64px', pointerEvents:'none' }} />
+      <div className="container" style={{position:'relative',zIndex:1,display:'grid',gridTemplateColumns:'1.1fr 0.9fr',gap:'5rem',alignItems:'center'}}>
 
-      <div className="container" style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'1.1fr 0.9fr', gap:'5rem', alignItems:'center' }}>
-
-        {/* ── LEFT TEXT SIDE ── */}
+        {/* LEFT */}
         <div>
+          {/* Status badge */}
           <motion.div {...fadeUp(0)}>
-            <div style={{ display:'inline-flex', alignItems:'center', gap:'.6rem', background:'rgba(6,214,160,0.08)', border:'1px solid rgba(6,214,160,0.2)', borderRadius:99, padding:'.4rem 1.1rem', marginBottom:'1.5rem' }}>
-              <span style={{ width:8, height:8, borderRadius:'50%', background:'var(--green)', boxShadow:'0 0 10px var(--green)', display:'inline-block', animation:'pulse 1.8s infinite' }} />
-              <span style={{ fontSize:'.72rem', fontWeight:700, letterSpacing:'.15em', textTransform:'uppercase', color:'var(--green)' }}>Available for Opportunities</span>
+            <div style={{display:'inline-flex',alignItems:'center',gap:'.6rem',background:'rgba(6,214,160,0.07)',border:'1px solid rgba(6,214,160,0.22)',borderRadius:99,padding:'.45rem 1.2rem',marginBottom:'1.75rem'}}>
+              <span style={{width:7,height:7,borderRadius:'50%',background:'var(--green)',boxShadow:'0 0 8px var(--green)',display:'inline-block',animation:'statusPulse 2s infinite'}}/>
+              <span style={{fontSize:'.68rem',fontWeight:700,letterSpacing:'.18em',textTransform:'uppercase',color:'var(--green)'}}>Available for Opportunities</span>
             </div>
           </motion.div>
 
-          <motion.h1 {...fadeUp(.08)} style={{ fontFamily:'var(--font-h)', fontSize:'clamp(3rem,5.5vw,5rem)', fontWeight:800, lineHeight:1.02, letterSpacing:'-.03em', marginBottom:'1.25rem' }}>
-            Krishna<br />
-            <span className="gradient-text glow">Adiveppa K.</span>
+          {/* Name */}
+          <motion.h1 {...fadeUp(.1)} style={{fontFamily:'var(--font-h)',fontSize:'clamp(3.2rem,5.5vw,5.2rem)',fontWeight:800,lineHeight:1.0,letterSpacing:'-.03em',marginBottom:'1.5rem'}}>
+            Hi, I'm<br/>
+            <span className="gradient-text" style={{display:'inline-block',position:'relative'}}>
+              Krishna<span style={{color:'var(--cyan)'}}>.</span>
+              {/* Underline shimmer */}
+              <span style={{position:'absolute',bottom:-4,left:0,right:0,height:3,borderRadius:99,background:'linear-gradient(90deg,var(--primary),var(--cyan),var(--pink))',backgroundSize:'200% 100%',animation:'shimmerLine 2.5s linear infinite'}}/>
+            </span>
           </motion.h1>
 
-          <motion.div {...fadeUp(.16)} style={{ fontSize:'1.15rem', color:'var(--text-2)', marginBottom:'1.5rem', minHeight:'1.8rem', display:'flex', alignItems:'center', gap:'.5rem' }}>
-            <span style={{ color:'var(--muted)' }}>I'm a</span>
-            <TypeAnimation
-              sequence={['Cloud Security Engineer',2200,'Full Stack Developer',2000,'AI / ML Enthusiast',2000,'AWS Cloud Practitioner',2000]}
-              wrapper="span" repeat={Infinity}
-              style={{ color:'var(--cyan)', fontWeight:700 }}
-            />
+          {/* Role typing */}
+          <motion.div {...fadeUp(.18)} style={{fontSize:'1.1rem',color:'var(--text-2)',marginBottom:'1.6rem',display:'flex',alignItems:'center',gap:'.6rem',flexWrap:'wrap'}}>
+            <span style={{color:'var(--muted)'}}>Crafting</span>
+            <span style={{padding:'.25rem .9rem',borderRadius:8,background:'rgba(124,109,255,0.1)',border:'1px solid rgba(124,109,255,0.2)'}}>
+              <TypeAnimation
+                sequence={['Cloud Security Solutions',2200,'Full Stack Applications',2000,'AI / ML Systems',2000,'AWS Architectures',2000]}
+                wrapper="span" repeat={Infinity}
+                style={{color:'var(--primary)',fontWeight:700}}
+              />
+            </span>
           </motion.div>
 
-          <motion.p {...fadeUp(.22)} style={{ color:'var(--muted)', lineHeight:1.85, maxWidth:500, marginBottom:'2.2rem', fontSize:'.95rem' }}>
-            B.E. CS student at SIT Mangalore — building secure, scalable, AI-powered applications.
-            Turning ideas into real-world software, one commit at a time.
+          {/* Description */}
+          <motion.p {...fadeUp(.24)} style={{color:'var(--muted)',lineHeight:1.9,maxWidth:500,marginBottom:'2.2rem',fontSize:'.94rem'}}>
+            B.E. CS student at SIT Mangalore — turning ideas into secure, scalable,
+            AI-powered software. <strong style={{color:'var(--text-2)'}}>Learning by building</strong>, one commit at a time.
           </motion.p>
 
-          <motion.div {...fadeUp(.28)} style={{ display:'flex', gap:'1rem', flexWrap:'wrap', marginBottom:'2.5rem' }}>
-            <a href="#projects" className="btn btn-primary">🚀 Explore Projects</a>
-            <a href="#contact" className="btn btn-outline">💬 Let's Talk</a>
+          {/* CTA Buttons */}
+          <motion.div {...fadeUp(.3)} style={{display:'flex',gap:'1rem',flexWrap:'wrap',marginBottom:'2.8rem'}}>
+            <a href="#projects" className="btn btn-primary" style={{gap:'.6rem'}}>
+              🚀 View Projects
+            </a>
+            <a href="#contact" className="btn btn-outline">
+              Let's Collaborate ↗
+            </a>
           </motion.div>
 
-          <motion.div {...fadeUp(.34)} style={{ display:'flex', gap:'.75rem', alignItems:'center' }}>
-            <span style={{ fontSize:'.72rem', color:'var(--muted)', letterSpacing:'.1em', textTransform:'uppercase', marginRight:'.25rem' }}>Find me</span>
+          {/* Social links */}
+          <motion.div {...fadeUp(.36)} style={{display:'flex',gap:'.6rem',alignItems:'center'}}>
+            <span style={{fontSize:'.7rem',color:'var(--muted)',letterSpacing:'.12em',textTransform:'uppercase',marginRight:'.3rem'}}>Connect</span>
             {[
-              { icon:<FiGithub size={16}/>,   href:'https://github.com/Krishnaaka',                label:'GitHub' },
-              { icon:<FiLinkedin size={16}/>, href:'https://www.linkedin.com/in/krishna-a-k',      label:'LinkedIn' },
-              { icon:<FiMail size={16}/>,     href:'mailto:krishnak1391@gmail.com',                label:'Email' },
-              { icon:<span style={{fontSize:13}}>🏅</span>, href:'https://www.credly.com/users/krishna-a-k', label:'Credly' },
+              {icon:<FiGithub size={15}/>,   href:'https://github.com/Krishnaaka',                label:'GitHub'},
+              {icon:<FiLinkedin size={15}/>, href:'https://www.linkedin.com/in/krishna-a-k',      label:'LinkedIn'},
+              {icon:<FiMail size={15}/>,     href:'mailto:krishnak1391@gmail.com',                label:'Email'},
+              {icon:<span>🏅</span>,         href:'https://www.credly.com/users/krishna-a-k',     label:'Credly'},
             ].map((s,i)=>(
-              <motion.a key={i} whileHover={{ y:-4, scale:1.08 }} href={s.href} target="_blank" title={s.label}
-                style={{ width:40, height:40, borderRadius:11, background:'var(--surface)', border:'1px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--muted)', transition:'border-color .3s, color .3s' }}
+              <motion.a key={i} href={s.href} target="_blank" title={s.label}
+                whileHover={{y:-4,scale:1.1}}
+                whileTap={{scale:.95}}
+                style={{width:40,height:40,borderRadius:11,background:'var(--surface)',border:'1px solid var(--border)',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--muted)',fontSize:'.95rem',transition:'border-color .3s,color .3s'}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--primary)';e.currentTarget.style.color='var(--primary)'}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--muted)'}}>
                 {s.icon}
@@ -131,45 +150,40 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ── RIGHT IMAGE SIDE ── */}
-        <motion.div initial={{ opacity:0, scale:.85 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.9, delay:.15, ease:[.25,.46,.45,.94] }}
-          style={{ display:'flex', justifyContent:'center', alignItems:'center', position:'relative' }}>
+        {/* RIGHT — Profile */}
+        <motion.div initial={{opacity:0,scale:.8,rotate:-5}} animate={{opacity:1,scale:1,rotate:0}} transition={{duration:1,delay:.2,ease:[.22,1,.36,1]}}
+          style={{display:'flex',justifyContent:'center',alignItems:'center',position:'relative'}}>
 
-          {/* Outer decorative rings */}
-          <div style={{ position:'absolute', width:380, height:380, borderRadius:'50%', border:'1px dashed rgba(124,109,255,0.15)', animation:'spinSlow 20s linear infinite' }} />
-          <div style={{ position:'absolute', width:440, height:440, borderRadius:'50%', border:'1px dashed rgba(0,232,204,0.08)', animation:'spinSlow 30s linear infinite reverse' }} />
+          {/* Orbit rings */}
+          <div style={{position:'absolute',width:420,height:420,borderRadius:'50%',border:'1px solid rgba(124,109,255,0.1)',animation:'orbit 25s linear infinite'}}/>
+          <div style={{position:'absolute',width:360,height:360,borderRadius:'50%',border:'1px dashed rgba(0,232,204,0.08)',animation:'orbit 18s linear infinite reverse'}}/>
 
-          {/* Profile ring */}
-          <div style={{ width:300, height:300, borderRadius:'50%', padding:3, background:'conic-gradient(var(--primary),var(--cyan),#a78bfa,var(--pink),var(--primary))', animation:'spinSlow 5s linear infinite', position:'relative' }}>
-            <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-              <img src="/profile.jpg" alt="Krishna AK" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top center' }}
-                onError={e=>{e.target.style.display='none'; e.target.nextSibling.style.display='flex'}} />
-              <div style={{ display:'none', width:'100%', height:'100%', alignItems:'center', justifyContent:'center', fontSize:'6rem', color:'var(--primary)' }}>👤</div>
+          {/* Glowing dots on orbit */}
+          <div style={{position:'absolute',width:420,height:420,borderRadius:'50%',animation:'orbit 25s linear infinite'}}>
+            <div style={{position:'absolute',top:-4,left:'50%',width:8,height:8,borderRadius:'50%',background:'var(--primary)',boxShadow:'0 0 12px var(--primary)',transform:'translateX(-50%)'}}/>
+          </div>
+
+          {/* Photo ring */}
+          <div style={{position:'relative',width:290,height:290}}>
+            {/* Animated conic gradient ring */}
+            <div style={{position:'absolute',inset:-4,borderRadius:'50%',background:'conic-gradient(var(--primary),var(--cyan),#a78bfa,var(--pink),var(--orange),var(--primary))',animation:'spinSlow 6s linear infinite',filter:'blur(1px)'}}/>
+            <div style={{position:'relative',width:'100%',height:'100%',borderRadius:'50%',overflow:'hidden',background:'var(--bg)',border:'4px solid var(--bg)'}}>
+              <img src="/profile.jpg" alt="Krishna AK"
+                style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'top center'}}
+                onError={e=>{e.target.style.display='none';e.target.nextSibling.style.display='flex'}}/>
+              <div style={{display:'none',width:'100%',height:'100%',alignItems:'center',justifyContent:'center',fontSize:'6rem',color:'var(--primary)'}}>👤</div>
             </div>
           </div>
 
-          {/* Floating skill chips */}
+          {/* Floating chips */}
           {[
-            { label:'Python 🐍',  v:'-20px', h:'-65px', side:'left',  color:'var(--cyan)',    delay:0 },
-            { label:'AWS ☁',     v:'30px',  h:'-70px', side:'right', color:'var(--yellow)',  delay:1 },
-            { label:'AI / ML 🤖', v:null,   h:'-25px', side:'left',  color:'var(--pink)',    delay:2, bottom:true },
-            { label:'Docker 🐋',  v:null,   h:'-60px', side:'right', color:'var(--green)',   delay:1.5, bottom:true },
+            {label:'Python 🐍',  color:'var(--cyan)',    pos:{top:'-18px',left:'-70px'},  delay:0  },
+            {label:'☁ AWS',      color:'var(--yellow)',  pos:{top:'30px', right:'-65px'}, delay:1  },
+            {label:'AI/ML 🤖',   color:'var(--pink)',    pos:{bottom:'30px',left:'-65px'},delay:2  },
+            {label:'🐋 Docker',  color:'var(--green)',   pos:{bottom:'0',right:'-70px'},  delay:1.5},
           ].map((c,i)=>(
-            <motion.div key={i}
-              animate={{ y:[0,-10,0] }} transition={{ repeat:Infinity, duration: 3+i*.4, delay:c.delay }}
-              style={{
-                position:'absolute',
-                top: c.bottom ? undefined : c.v,
-                bottom: c.bottom ? c.v || '30px' : undefined,
-                [c.side]: c.h,
-                background:'rgba(14,14,32,0.9)',
-                backdropFilter:'blur(12px)',
-                border:`1px solid ${c.color}40`,
-                borderRadius:12, padding:'.5rem 1rem',
-                fontSize:'.78rem', fontWeight:700, color:c.color,
-                boxShadow:`0 8px 32px rgba(0,0,0,.4), 0 0 20px ${c.color}20`,
-                whiteSpace:'nowrap',
-              }}>
+            <motion.div key={i} animate={{y:[0,-10,0]}} transition={{repeat:Infinity,duration:3.2+i*.5,delay:c.delay}}
+              style={{position:'absolute',...c.pos,background:'rgba(10,10,28,0.92)',backdropFilter:'blur(16px)',border:`1px solid ${c.color}35`,borderRadius:12,padding:'.5rem 1rem',fontSize:'.76rem',fontWeight:700,color:c.color,boxShadow:`0 8px 24px rgba(0,0,0,.5),0 0 20px ${c.color}18`,whiteSpace:'nowrap',zIndex:2}}>
               {c.label}
             </motion.div>
           ))}
@@ -177,20 +191,20 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.a href="#about" animate={{ y:[0,8,0] }} transition={{ repeat:Infinity, duration:1.6 }}
-        style={{ position:'absolute', bottom:'2.5rem', left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:'.4rem', color:'var(--muted)', fontSize:'.72rem', letterSpacing:'.12em', textTransform:'uppercase', zIndex:1, cursor:'none' }}>
-        Scroll <FiArrowDown size={16} />
+      <motion.a href="#about" animate={{y:[0,10,0]}} transition={{repeat:Infinity,duration:1.7}}
+        style={{position:'absolute',bottom:'2.5rem',left:'50%',transform:'translateX(-50%)',display:'flex',flexDirection:'column',alignItems:'center',gap:'.4rem',color:'var(--muted)',fontSize:'.68rem',letterSpacing:'.15em',textTransform:'uppercase',zIndex:2,cursor:'none'}}>
+        scroll <FiArrowDown size={15}/>
       </motion.a>
 
       <style>{`
-        @keyframes spinSlow { to { transform: rotate(360deg) } }
-        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(6,214,160,.5)} 50%{box-shadow:0 0 0 6px rgba(6,214,160,0)} }
+        @keyframes spinSlow{to{transform:rotate(360deg)}}
+        @keyframes orbit{to{transform:rotate(360deg)}}
+        @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.4}}
+        @keyframes shimmerLine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
         @media(max-width:960px){
-          #hero .container { grid-template-columns:1fr !important; gap:3rem !important; }
-          #hero .container > div:last-child { display:none !important; }
-          #hero { text-align:center; }
-          #hero .container > div:first-child > div:last-child { justify-content:center; }
-          #hero .container > div:first-child > div:nth-child(5) { justify-content:center; }
+          #hero .container{grid-template-columns:1fr!important;gap:2rem!important}
+          #hero .container>div:last-child{display:none!important}
+          #hero{text-align:center}
         }
       `}</style>
     </section>
