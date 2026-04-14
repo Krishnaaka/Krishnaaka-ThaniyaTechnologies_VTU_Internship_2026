@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { StaggerReveal, RevealItem } from '../components/ScrollEffects'
 
 const education = [
   {
@@ -45,8 +46,9 @@ export default function Education() {
           </div>
         </motion.div>
 
-        <div style={{ display:'flex', flexDirection:'column', gap:'1.25rem', maxWidth:760, margin:'0 auto' }}>
+        <StaggerReveal stagger={0.12} style={{ display:'flex', flexDirection:'column', gap:'1.25rem', maxWidth:760, margin:'0 auto' }}>
           {education.map((e, i) => (
+            <RevealItem key={i} direction="left">
             <motion.div key={i}
               initial={{ opacity:0, x:-30 }} whileInView={{ opacity:1, x:0 }}
               viewport={{ once:true }} transition={{ duration:.6, delay: i * 0.1 }}
@@ -79,8 +81,9 @@ export default function Education() {
                 <div style={{ fontSize:'.72rem', color:'var(--muted)', marginTop:'.25rem' }}>{e.period}</div>
               </div>
             </motion.div>
+            </RevealItem>
           ))}
-        </div>
+        </StaggerReveal>
       </div>
     </section>
   )

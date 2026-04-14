@@ -93,6 +93,44 @@ img { max-width: 100%; }
 .container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
 .section-header { margin-bottom: 4rem; }
 
+/* ── Ticker strip between sections ── */
+.ticker-divider {
+  width: 100%;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(124,109,255,0.02);
+  overflow: hidden;
+}
+
+/* ── Section dot nav (right side) ── */
+.section-dots-wrap {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  z-index: 800;
+}
+@media(max-width:900px) { .section-dots-wrap { display: none !important; } }
+
+/* ── Scroll progress bar (top) ── */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--cyan), var(--pink));
+  transform-origin: 0%;
+  z-index: 9999;
+}
+
+/* ── Section entry animation helper ── */
+.will-animate {
+  will-change: transform, opacity;
+}
+
 /* ── Section tag ── */
 .section-tag {
   display: inline-flex; align-items: center; gap: .5rem;

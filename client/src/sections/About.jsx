@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { ScrollRevealText, Ticker } from '../components/ScrollEffects'
 
 const stats = [
   { num: 3,    suffix: '+', label: 'Internships',      icon: '💼', color: 'var(--primary)' },
@@ -52,7 +53,9 @@ export default function About() {
         <motion.div initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:.6 }}>
           <div className="section-header">
             <span className="section-tag">✦ Who I Am</span>
-            <h2 className="section-title">About <span className="gradient-text">Me</span></h2>
+            <h2 className="section-title">
+              <ScrollRevealText text="About Me" />
+            </h2>
             <div className="section-divider" />
           </div>
         </motion.div>
@@ -139,7 +142,6 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-      <style>{`@media(max-width:768px){#about .container>div{grid-template-columns:1fr!important}}`}</style>
     </section>
   )
 }

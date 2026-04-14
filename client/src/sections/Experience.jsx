@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { StaggerReveal, RevealItem } from '../components/ScrollEffects'
 
 const experiences = [
   {
@@ -67,8 +68,9 @@ export default function Experience() {
           {/* Vertical timeline line */}
           <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, background:'linear-gradient(to bottom,var(--primary),var(--cyan),transparent)', borderRadius:99 }} />
 
+          <StaggerReveal stagger={0.15}>
           {experiences.map((e, i) => (
-            <motion.div key={i}
+            <RevealItem key={i} direction="left">
               initial={{ opacity:0, x:-30 }} whileInView={{ opacity:1, x:0 }}
               viewport={{ once:true }} transition={{ duration:.6, delay: i * 0.12 }}
               style={{ position:'relative', marginBottom:'2.25rem' }}>
@@ -124,8 +126,10 @@ export default function Experience() {
                   ))}
                 </div>
               </motion.div>
-            </motion.div>
+              </motion.div>
+            </RevealItem>
           ))}
+          </StaggerReveal>
         </div>
       </div>
     </section>

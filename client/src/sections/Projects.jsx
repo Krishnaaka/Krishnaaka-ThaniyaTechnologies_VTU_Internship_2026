@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { FiGithub, FiExternalLink } from 'react-icons/fi'
+import { StaggerReveal, RevealItem } from '../components/ScrollEffects'
 
 const projects = [
   {
@@ -168,9 +169,13 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(340px,1fr))', gap:'1.5rem' }}>
-          {projects.map((p, i) => <SpotlightCard key={i} p={p} i={i} />)}
-        </div>
+        <StaggerReveal stagger={0.1} style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(340px,1fr))', gap:'1.5rem' }}>
+          {projects.map((p, i) => (
+            <RevealItem key={i} direction="scale">
+              <SpotlightCard p={p} i={i} />
+            </RevealItem>
+          ))}
+        </StaggerReveal>
 
         <motion.div initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }} transition={{ delay:.4 }}
           style={{ textAlign:'center', marginTop:'3.5rem' }}>

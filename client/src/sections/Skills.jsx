@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { StaggerReveal, RevealItem } from '../components/ScrollEffects'
 
 const groups = [
   {
@@ -42,9 +43,10 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:'1.25rem' }}>
+        <StaggerReveal stagger={0.08} style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:'1.25rem' }}>
           {groups.map((g, i) => (
-            <motion.div key={i} className="glass-card"
+            <RevealItem key={i}>
+            <motion.div className="glass-card"
               initial={{ opacity:0, y:35 }} whileInView={{ opacity:1, y:0 }}
               viewport={{ once:true }} transition={{ duration:.55, delay: i * 0.06 }}
               style={{ padding:'1.75rem', cursor:'default' }}>
@@ -75,8 +77,9 @@ export default function Skills() {
                 ))}
               </div>
             </motion.div>
+            </RevealItem>
           ))}
-        </div>
+        </StaggerReveal>
 
         {/* Always learning card */}
         <motion.div
