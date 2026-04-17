@@ -1,128 +1,93 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 const links = ['About','Skills','Experience','Projects','Certifications','Education','Contact']
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [progress, setProgress]  = useState(0)
+  const [progress, setProgress] = useState(0)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
   const [theme, setTheme] = useState(() => localStorage.getItem('pf-theme') || 'dark')
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.style.setProperty('--bg', theme === 'light' ? '#f8fafc' : '#070c18')
+    document.documentElement.style.setProperty('--bg2', theme === 'light' ? '#f1f5f9' : '#0a1020')
+    document.documentElement.style.setProperty('--card', theme === 'light' ? '#ffffff' : '#0d1424')
+    document.documentElement.style.setProperty('--surface', theme === 'light' ? '#e2e8f0' : '#161d2f')
+    document.documentElement.style.setProperty('--border', theme === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)')
+    document.documentElement.style.setProperty('--text', theme === 'light' ? '#0f172a' : '#f1f5f9')
+    document.documentElement.style.setProperty('--text-2', theme === 'light' ? '#475569' : '#94a3b8')
+    document.documentElement.style.setProperty('--muted', theme === 'light' ? '#94a3b8' : '#475569')
     localStorage.setItem('pf-theme', theme)
-    if (theme === 'light') {
-      document.documentElement.style.setProperty('--bg', '#f0f0f8')
-      document.documentElement.style.setProperty('--bg2', '#e8e8f4')
-      document.documentElement.style.setProperty('--surface', '#ffffff')
-      document.documentElement.style.setProperty('--card', '#ffffff')
-      document.documentElement.style.setProperty('--border', 'rgba(0,0,0,0.08)')
-      document.documentElement.style.setProperty('--text', '#1a1a2e')
-      document.documentElement.style.setProperty('--muted', '#5a5a7a')
-    } else {
-      document.documentElement.style.setProperty('--bg', '#050508')
-      document.documentElement.style.setProperty('--bg2', '#080810')
-      document.documentElement.style.setProperty('--surface', '#0e0e1a')
-      document.documentElement.style.setProperty('--card', '#12121f')
-      document.documentElement.style.setProperty('--border', 'rgba(255,255,255,0.06)')
-      document.documentElement.style.setProperty('--text', '#e8e8f0')
-      document.documentElement.style.setProperty('--muted', '#5a5a7a')
-    }
   }, [theme])
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 50)
-      const total = document.body.scrollHeight - window.innerHeight
-      setProgress((window.scrollY / total) * 100)
-
-      // active section
+      setScrolled(window.scrollY > 40)
+      setProgress((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100)
       links.forEach(l => {
         const el = document.getElementById(l.toLowerCase())
-        if (el) {
-          const rect = el.getBoundingClientRect()
-          if (rect.top <= 120 && rect.bottom >= 120) setActive(l.toLowerCase())
-        }
+        if (el) { const r = el.getBoundingClientRect(); if (r.top <= 110 && r.bottom >= 110) setActive(l.toLowerCase()) }
       })
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive:true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const navStyle = {
-    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-    background: scrolled ? 'rgba(5,5,8,0.92)' : 'transparent',
-    backdropFilter: scrolled ? 'blur(24px)' : 'none',
-    borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
-    transition: 'all 0.4s ease',
-  }
-
   return (
-    <nav style={navStyle}>
-      <div style={{ maxWidth:1180, margin:'0 auto', padding:'.9rem 2rem', display:'flex', alignItems:'center', gap:'2rem' }}>
-        {/* Logo */}
-        <a href="#hero" style={{ fontFamily:'var(--font-h)', fontSize:'1.4rem', fontWeight:800, background:'linear-gradient(135deg,var(--primary),var(--cyan))', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', flex:1 }}>
-          KAK<span style={{ color:'var(--cyan)', WebkitTextFillColor:'var(--cyan)' }}>.</span>
+    <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:1000, background: scrolled ? 'rgba(7,12,24,0.88)' : 'transparent', backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none', borderBottom: scrolled ? '1px solid var(--border)' : 'none', transition:'all .35s ease' }}>
+      <div style={{ maxWidth:1180, margin:'0 auto', padding:'.85rem 2rem', display:'flex', alignItems:'center', gap:'1.5rem' }}>
+
+        <a href="#hero" style={{ fontFamily:'var(--font-h)', fontSize:'1.35rem', fontWeight:800, flex:1 }}>
+          <span className="gt-blue">KAK</span><span style={{ color:'var(--orange)' }}>.</span>
         </a>
 
-        {/* Desktop Links */}
-        <ul style={{ display:'flex', gap:'2rem', alignItems:'center' }} className="desktop-nav">
+        {/* Desktop nav */}
+        <ul style={{ display:'flex', gap:'1.75rem', alignItems:'center' }} className="desk-nav">
           {links.map(l => (
             <li key={l}>
-              <a
-                href={`#${l.toLowerCase()}`}
-                style={{
-                  fontFamily:'var(--font)', fontSize:'.875rem', fontWeight:500,
-                  color: active === l.toLowerCase() ? 'var(--cyan)' : 'var(--muted)',
-                  transition:'color .3s', position:'relative', paddingBottom:4,
-                  cursor: 'none',
-                }}
-              >
+              <a href={`#${l.toLowerCase()}`}
+                style={{ fontSize:'.82rem', fontWeight:500, color: active === l.toLowerCase() ? 'var(--blue)' : 'var(--muted)', transition:'color .25s', position:'relative', paddingBottom:3, cursor:'none' }}>
                 {l}
                 {active === l.toLowerCase() && (
-                  <motion.span layoutId="underline" style={{
-                    position:'absolute', bottom:0, left:0, right:0, height:2,
-                    background:'var(--cyan)', borderRadius:99,
-                  }} />
+                  <motion.span layoutId="nav-ul" style={{ position:'absolute', bottom:0, left:0, right:0, height:2, background:'var(--blue)', borderRadius:99 }}/>
                 )}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* Theme toggle */}
+        {/* Theme */}
         <button onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-          title="Toggle theme"
-          style={{ background:'var(--card)', border:'1px solid var(--border)', color:'var(--text)', width:38, height:38, borderRadius:10, cursor:'none', fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', transition:'all .3s' }}
-          onMouseEnter={e => e.currentTarget.style.borderColor='var(--primary)'}
+          style={{ width:36, height:36, borderRadius:9, background:'var(--card)', border:'1px solid var(--border)', color:'var(--text-2)', cursor:'none', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'.95rem', transition:'var(--tr)' }}
+          onMouseEnter={e => e.currentTarget.style.borderColor='var(--blue)'}
           onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}>
           {theme === 'dark' ? '☀' : '🌙'}
         </button>
 
-        {/* Hire Me */}
-        <a href="mailto:krishnak1391@gmail.com" className="btn btn-primary" style={{ fontSize:'.82rem', padding:'.5rem 1.4rem' }}>
+        <a href="mailto:krishnak1391@gmail.com" className="btn btn-blue" style={{ padding:'.5rem 1.3rem', fontSize:'.8rem' }}>
           Hire Me ✦
         </a>
 
-        {/* Hamburger */}
-        <button onClick={() => setOpen(o => !o)} style={{ background:'none', border:'none', color:'var(--text)', fontSize:'1.3rem', cursor:'none', display:'none' }} className="hamburger-btn">
-          {open ? '✕' : '☰'}
+        <button onClick={() => setOpen(o => !o)} className="mob-menu"
+          style={{ display:'none', background:'none', border:'none', color:'var(--text)', cursor:'none', fontSize:'1.2rem' }}>
+          {open ? <FiX/> : <FiMenu/>}
         </button>
       </div>
 
-      {/* Progress bar */}
-      <div style={{ height:2, background:'linear-gradient(90deg,var(--primary),var(--cyan))', width:`${progress}%`, transition:'width .1s linear' }} />
+      {/* Progress */}
+      <div style={{ height:2, background:'linear-gradient(90deg,var(--blue),var(--orange))', width:`${progress}%`, transition:'width .1s linear' }}/>
 
-      {/* Mobile menu */}
+      {/* Mobile */}
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity:0, y:-20 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-20 }}
-            style={{ position:'absolute', top:'100%', left:0, right:0, background:'rgba(5,5,8,0.98)', padding:'2rem', display:'flex', flexDirection:'column', gap:'1.5rem', alignItems:'center' }}>
+          <motion.div initial={{ opacity:0, y:-10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-10 }}
+            style={{ background:'rgba(7,12,24,.97)', padding:'2rem', display:'flex', flexDirection:'column', gap:'1.5rem', alignItems:'center' }}>
             {links.map(l => (
               <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)}
-                style={{ fontSize:'1.1rem', fontWeight:600, color: active === l.toLowerCase() ? 'var(--cyan)' : 'var(--text)' }}>
+                style={{ fontSize:'1rem', fontWeight:600, color: active === l.toLowerCase() ? 'var(--blue)' : 'var(--text)' }}>
                 {l}
               </a>
             ))}
@@ -131,10 +96,7 @@ export default function Navbar() {
       </AnimatePresence>
 
       <style>{`
-        @media(max-width:768px){
-          .desktop-nav{display:none!important}
-          .hamburger-btn{display:block!important}
-        }
+        @media(max-width:768px){.desk-nav{display:none!important}.mob-menu{display:flex!important}}
       `}</style>
     </nav>
   )
