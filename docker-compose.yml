@@ -1,0 +1,32 @@
+services:
+
+  backend:
+    build:
+      context: ./Day12/student-api
+      dockerfile: Dockerfile
+    container_name: student-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - student-net
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: student-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - student-net
+
+networks:
+  student-net:
+    driver: bridge

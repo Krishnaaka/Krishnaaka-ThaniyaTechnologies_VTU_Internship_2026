@@ -1,7 +1,13 @@
-node_modules/
-dist/
-.env
+# OS
 .DS_Store
 Thumbs.db
-*.log
+
+# Editor
 .vscode/
+.idea/
+
+# Logs
+*.log
+
+# Node (if backend added later)
+node_modules/
