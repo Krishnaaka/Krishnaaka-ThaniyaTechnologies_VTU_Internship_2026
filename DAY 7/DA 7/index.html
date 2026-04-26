@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CricketIQ — Advanced Cricket Analytics</title>
+  <meta name="description" content="CricketIQ delivers real-time cricket analytics, player performance tracking, match insights, and in-depth statistics for cricket fans and analysts." />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════ NAVBAR ══════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <i class="fas fa-cricket-ball"></i>
+      <span>CricketIQ</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link active">Home</a></li>
+      <li><a href="#live-scores" class="nav-link">Live</a></li>
+      <li><a href="#team-stats" class="nav-link">Stats</a></li>
+      <li><a href="#players" class="nav-link">Players</a></li>
+      <li><a href="#matches" class="nav-link">Matches</a></li>
+    </ul>
+    <button class="nav-cta" id="navCta">
+      <i class="fas fa-chart-line"></i> Analyze
+    </button>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════ HERO ══════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-particles" id="particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        <span>LIVE ANALYTICS</span>
+      </div>
+      <h1 class="hero-title">
+        Master the Game<br />
+        <span class="gradient-text">With Data</span>
+      </h1>
+      <p class="hero-subtitle">
+        Real-time cricket intelligence — player insights, live scores,
+        predictive analytics, and deep match breakdowns. All in one place.
+      </p>
+      <div class="hero-actions">
+        <a href="#team-stats" class="btn btn-primary">
+          <i class="fas fa-chart-bar"></i> Explore Stats
+        </a>
+        <a href="#live-scores" class="btn btn-ghost">
+          <i class="fas fa-play-circle"></i> Live Matches
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-num" data-target="2400">0</span><span class="hstat-unit">+</span>
+          <span class="hstat-label">Matches Analyzed</span>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <span class="hstat-num" data-target="850">0</span><span class="hstat-unit">+</span>
+          <span class="hstat-label">Players Tracked</span>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <span class="hstat-num" data-target="99">0</span><span class="hstat-unit">%</span>
+          <span class="hstat-label">Data Accuracy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll to explore</span>
+      <i class="fas fa-chevron-down bounce"></i>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ LIVE TICKER ══════════════════════════ -->
+  <section class="live-scores" id="live-scores">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge live-badge">
+          <span class="live-dot"></span> LIVE
+        </div>
+        <h2 class="section-title">Live <span class="gradient-text">Scores</span></h2>
+        <p class="section-sub">Real-time match updates from around the world</p>
+      </div>
+
+      <div class="score-cards">
+
+        <!-- Match 1 -->
+        <div class="score-card" id="match1">
+          <div class="sc-header">
+            <span class="match-type ind">T20 World Cup</span>
+            <span class="match-status live">● LIVE</span>
+          </div>
+          <div class="sc-teams">
+            <div class="sc-team">
+              <div class="team-flag">🇮🇳</div>
+              <div class="team-name">India</div>
+              <div class="team-score" id="ind-score">187/4</div>
+              <div class="team-overs">(18.3 ov)</div>
+            </div>
+            <div class="sc-vs">VS</div>
+            <div class="sc-team right">
+              <div class="team-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+              <div class="team-name">England</div>
+              <div class="team-score">142/6</div>
+              <div class="team-overs">(15.0 ov)</div>
+            </div>
+          </div>
+          <div class="sc-footer">
+            <span class="run-rate">CRR: 9.47</span>
+            <span class="req-rate">RRR: 13.50</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" style="width: 76%"></div>
+          </div>
+        </div>
+
+        <!-- Match 2 -->
+        <div class="score-card">
+          <div class="sc-header">
+            <span class="match-type aus">ODI Series</span>
+            <span class="match-status completed">✓ COMPLETED</span>
+          </div>
+          <div class="sc-teams">
+            <div class="sc-team">
+              <div class="team-flag">🇦🇺</div>
+              <div class="team-name">Australia</div>
+              <div class="team-score">289/7</div>
+              <div class="team-overs">(50 ov)</div>
+            </div>
+            <div class="sc-vs">VS</div>
+            <div class="sc-team right">
+              <div class="team-flag">🇿🇦</div>
+              <div class="team-name">S. Africa</div>
+              <div class="team-score">267/9</div>
+              <div class="team-overs">(50 ov)</div>
+            </div>
+          </div>
+          <div class="sc-footer winner-footer">
+            <span class="match-result">🏆 Australia won by 22 runs</span>
+          </div>
+        </div>
+
+        <!-- Match 3 -->
+        <div class="score-card">
+          <div class="sc-header">
+            <span class="match-type pak">Test Match</span>
+            <span class="match-status upcoming">◷ UPCOMING</span>
+          </div>
+          <div class="sc-teams">
+            <div class="sc-team">
+              <div class="team-flag">🇵🇰</div>
+              <div class="team-name">Pakistan</div>
+              <div class="team-score">—</div>
+              <div class="team-overs">Batting TBD</div>
+            </div>
+            <div class="sc-vs">VS</div>
+            <div class="sc-team right">
+              <div class="team-flag">🇳🇿</div>
+              <div class="team-name">New Zealand</div>
+              <div class="team-score">—</div>
+              <div class="team-overs">Bowling TBD</div>
+            </div>
+          </div>
+          <div class="sc-footer">
+            <span class="run-rate">📅 Tomorrow, 9:00 AM IST</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ TEAM STATS ══════════════════════════ -->
+  <section class="team-stats" id="team-stats">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Analytics</div>
+        <h2 class="section-title">Team <span class="gradient-text">Performance</span></h2>
+        <p class="section-sub">Head-to-head comparison and tournament overview</p>
+      </div>
+
+      <!-- Tab buttons -->
+      <div class="tabs">
+        <button class="tab active" data-tab="batting">⚡ Batting</button>
+        <button class="tab" data-tab="bowling">🎯 Bowling</button>
+        <button class="tab" data-tab="fielding">🧤 Fielding</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="chart-card glass-card">
+          <h3 class="chart-title">Run Rate by Over</h3>
+          <canvas id="runRateChart"></canvas>
+        </div>
+        <div class="chart-card glass-card">
+          <h3 class="chart-title">Team Win Distribution</h3>
+          <canvas id="winChart"></canvas>
+        </div>
+        <div class="chart-card glass-card wide">
+          <h3 class="chart-title">Batting Average — Top Teams</h3>
+          <canvas id="avgChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ PLAYERS ══════════════════════════ -->
+  <section class="players" id="players">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Stars</div>
+        <h2 class="section-title">Top <span class="gradient-text">Players</span></h2>
+        <p class="section-sub">Best performers across formats this season</p>
+      </div>
+
+      <div class="player-cards">
+
+        <div class="player-card glass-card">
+          <div class="player-rank">#1</div>
+          <div class="player-avatar" style="background: linear-gradient(135deg,#f97316,#dc2626)">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="player-info">
+            <h4>Virat Kohli</h4>
+            <span class="player-country">🇮🇳 India</span>
+            <span class="player-role">Batsman</span>
+          </div>
+          <div class="player-stats-row">
+            <div class="pstat"><span>Avg</span><strong>58.6</strong></div>
+            <div class="pstat"><span>Runs</span><strong>14,228</strong></div>
+            <div class="pstat"><span>SR</span><strong>139.2</strong></div>
+          </div>
+          <div class="player-bar-wrap">
+            <span>Form</span>
+            <div class="player-bar"><div class="player-bar-fill" style="width:92%;background:linear-gradient(90deg,#f97316,#dc2626)"></div></div>
+            <span>92%</span>
+          </div>
+        </div>
+
+        <div class="player-card glass-card">
+          <div class="player-rank">#2</div>
+          <div class="player-avatar" style="background: linear-gradient(135deg,#8b5cf6,#6d28d9)">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="player-info">
+            <h4>Ben Stokes</h4>
+            <span class="player-country">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</span>
+            <span class="player-role">All-Rounder</span>
+          </div>
+          <div class="player-stats-row">
+            <div class="pstat"><span>Avg</span><strong>41.3</strong></div>
+            <div class="pstat"><span>Wkts</span><strong>182</strong></div>
+            <div class="pstat"><span>SR</span><strong>127.8</strong></div>
+          </div>
+          <div class="player-bar-wrap">
+            <span>Form</span>
+            <div class="player-bar"><div class="player-bar-fill" style="width:85%;background:linear-gradient(90deg,#8b5cf6,#6d28d9)"></div></div>
+            <span>85%</span>
+          </div>
+        </div>
+
+        <div class="player-card glass-card">
+          <div class="player-rank">#3</div>
+          <div class="player-avatar" style="background: linear-gradient(135deg,#06b6d4,#0284c7)">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="player-info">
+            <h4>Jasprit Bumrah</h4>
+            <span class="player-country">🇮🇳 India</span>
+            <span class="player-role">Bowler</span>
+          </div>
+          <div class="player-stats-row">
+            <div class="pstat"><span>Econ</span><strong>6.4</strong></div>
+            <div class="pstat"><span>Wkts</span><strong>315</strong></div>
+            <div class="pstat"><span>Avg</span><strong>21.8</strong></div>
+          </div>
+          <div class="player-bar-wrap">
+            <span>Form</span>
+            <div class="player-bar"><div class="player-bar-fill" style="width:96%;background:linear-gradient(90deg,#06b6d4,#0284c7)"></div></div>
+            <span>96%</span>
+          </div>
+        </div>
+
+        <div class="player-card glass-card">
+          <div class="player-rank">#4</div>
+          <div class="player-avatar" style="background: linear-gradient(135deg,#10b981,#059669)">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="player-info">
+            <h4>Steve Smith</h4>
+            <span class="player-country">🇦🇺 Australia</span>
+            <span class="player-role">Batsman</span>
+          </div>
+          <div class="player-stats-row">
+            <div class="pstat"><span>Avg</span><strong>61.7</strong></div>
+            <div class="pstat"><span>Runs</span><strong>9,540</strong></div>
+            <div class="pstat"><span>100s</span><strong>32</strong></div>
+          </div>
+          <div class="player-bar-wrap">
+            <span>Form</span>
+            <div class="player-bar"><div class="player-bar-fill" style="width:79%;background:linear-gradient(90deg,#10b981,#059669)"></div></div>
+            <span>79%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ LEADERBOARD ══════════════════════════ -->
+  <section class="leaderboard" id="matches">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Rankings</div>
+        <h2 class="section-title">ICC <span class="gradient-text">Leaderboard</span></h2>
+        <p class="section-sub">Top-ranked batsmen in ODIs this cycle</p>
+      </div>
+
+      <div class="table-wrap glass-card">
+        <table class="cricket-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Country</th>
+              <th>Matches</th>
+              <th>Runs</th>
+              <th>Average</th>
+              <th>SR</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tr-gold">
+              <td><span class="rank-badge gold">1</span></td>
+              <td><strong>Virat Kohli</strong></td>
+              <td>🇮🇳 India</td>
+              <td>274</td>
+              <td>13,906</td>
+              <td>58.6</td>
+              <td>93.5</td>
+              <td><div class="rating-bar"><div style="width:96%"></div></div></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge silver">2</span></td>
+              <td><strong>David Warner</strong></td>
+              <td>🇦🇺 Australia</td>
+              <td>161</td>
+              <td>6,932</td>
+              <td>45.3</td>
+              <td>96.8</td>
+              <td><div class="rating-bar"><div style="width:85%"></div></div></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge bronze">3</span></td>
+              <td><strong>Joe Root</strong></td>
+              <td>🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</td>
+              <td>161</td>
+              <td>6,971</td>
+              <td>50.1</td>
+              <td>86.3</td>
+              <td><div class="rating-bar"><div style="width:80%"></div></div></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge">4</span></td>
+              <td><strong>Babar Azam</strong></td>
+              <td>🇵🇰 Pakistan</td>
+              <td>107</td>
+              <td>5,520</td>
+              <td>57.5</td>
+              <td>87.9</td>
+              <td><div class="rating-bar"><div style="width:77%"></div></div></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge">5</span></td>
+              <td><strong>Rohit Sharma</strong></td>
+              <td>🇮🇳 India</td>
+              <td>245</td>
+              <td>10,709</td>
+              <td>48.9</td>
+              <td>89.6</td>
+              <td><div class="rating-bar"><div style="width:74%"></div></div></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge">6</span></td>
+              <td><strong>Quinton de Kock</strong></td>
+              <td>🇿🇦 S. Africa</td>
+              <td>155</td>
+              <td>7,210</td>
+              <td>44.6</td>
+              <td>97.4</td>
+              <td><div class="rating-bar"><div style="width:71%"></div></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <i class="fas fa-cricket-ball"></i>
+          <span>CricketIQ</span>
+        </div>
+        <p class="footer-tagline">Intelligence beyond boundaries.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 CricketIQ Analytics. Built with ❤️ for cricket fans.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

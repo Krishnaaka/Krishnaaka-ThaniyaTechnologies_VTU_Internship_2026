@@ -1,0 +1,21 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy application code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Set environment
+ENV REACT_APP_API_URL=http://localhost:5000/api
+
+# Start the application
+CMD ["npm", "start"]
