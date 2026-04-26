@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudentIQ — Premium Student Management System</title>
+  <meta name="description" content="StudentIQ is a premium student management dashboard with CRUD operations, analytics, smart search, and real-time API status. Built by Krishna — VTU Internship 2026." />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- Main Stylesheet (Day 2 & 3) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       SIDEBAR — Left navigation panel
+  ════════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Brand / Logo -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="brand-text">
+        <strong>StudentIQ</strong>
+        <small>Management System</small>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main Menu</span>
+
+      <!-- Dashboard Page Link -->
+      <a href="#" class="nav-item active" id="nav-dashboard" data-page="dashboard">
+        <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- Students Page Link -->
+      <a href="#" class="nav-item" id="nav-students" data-page="students">
+        <div class="nav-icon"><i class="fas fa-users"></i></div>
+        <span>Students</span>
+      </a>
+
+      <!-- Add Student Page Link -->
+      <a href="#" class="nav-item" id="nav-add" data-page="add">
+        <div class="nav-icon"><i class="fas fa-user-plus"></i></div>
+        <span>Add Student</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer — Admin Info -->
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-inner">
+        <div class="sidebar-avatar">K</div>
+        <div class="sidebar-footer-text">
+          <strong>Krishna</strong>
+          <span>Final Project · v1.0</span>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════
+       MAIN CONTENT AREA
+  ════════════════════════════════════════════════ -->
+  <main class="main" id="mainContent">
+
+    <!-- ── TOP BAR ───────────────────────────────── -->
+    <header class="topbar">
+
+      <!-- Mobile sidebar toggle button -->
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Breadcrumb — shows current page -->
+      <div class="topbar-breadcrumb">
+        <span class="breadcrumb-root">StudentIQ</span>
+        <span class="breadcrumb-sep">
+          <i class="fas fa-chevron-right" style="font-size:.6rem"></i>
+        </span>
+        <span class="topbar-title" id="pageTitle">Dashboard</span>
+      </div>
+
+      <!-- API Status Badge (live/offline indicator) -->
+      <div class="topbar-actions">
+        <div class="api-badge" id="apiStatus">
+          <span class="dot"></span>
+          <span id="apiLabel">API Offline</span>
+        </div>
+      </div>
+
+    </header>
+
+    <!-- ═══════════════════════════════════════════════
+         PAGE 1 — DASHBOARD
+    ════════════════════════════════════════════════ -->
+    <div class="page active" id="page-dashboard">
+
+      <!-- Page heading -->
+      <div class="page-header">
+        <h1>Analytics Overview</h1>
+        <p>Real-time insights from your student database</p>
+      </div>
+
+      <!-- ── STAT CARDS ROW ─────────────────────── -->
+      <div class="stat-cards" id="statCards">
+
+        <!-- Card 1: Total Students -->
+        <div class="stat-card violet">
+          <div class="card-glow"></div>
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-body">
+            <div class="stat-label">Total Students</div>
+            <div class="stat-value" id="totalStudents">—</div>
+            <div class="stat-sub">
+              <span class="stat-trend"><i class="fas fa-arrow-up"></i> Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Average Marks -->
+        <div class="stat-card emerald">
+          <div class="card-glow"></div>
+          <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="stat-body">
+            <div class="stat-label">Average Marks</div>
+            <div class="stat-value" id="avgMarks">—</div>
+            <div class="stat-sub">Out of 100 points</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Top Student -->
+        <div class="stat-card amber">
+          <div class="card-glow"></div>
+          <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+          <div class="stat-body">
+            <div class="stat-label">Top Student</div>
+            <div class="stat-value" id="topStudent" style="font-size:1.15rem">—</div>
+            <div class="stat-sub">Highest performer</div>
+          </div>
+        </div>
+
+        <!-- Card 4: Highest Marks -->
+        <div class="stat-card cyan">
+          <div class="card-glow"></div>
+          <div class="stat-icon"><i class="fas fa-star"></i></div>
+          <div class="stat-body">
+            <div class="stat-label">Highest Marks</div>
+            <div class="stat-value" id="highestMarks">—</div>
+            <div class="stat-sub">Personal best</div>
+          </div>
+        </div>
+
+      </div><!-- /.stat-cards -->
+
+      <!-- ── DASHBOARD GRID ─────────────────────── -->
+      <div class="dashboard-grid">
+
+        <!-- Branch Breakdown Panel -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <div class="section-card-title">
+              <div class="mini-icon violet-bg">
+                <i class="fas fa-sitemap"></i>
+              </div>
+              Students by Branch
+            </div>
+            <span class="tag">Live</span>
+          </div>
+          <div class="section-card-body">
+            <div class="branch-list" id="branchList">
+              <p class="loading-text">
+                <i class="fas fa-spinner fa-spin"></i> Loading...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Panel -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <div class="section-card-title">
+              <div class="mini-icon cyan-bg">
+                <i class="fas fa-bolt"></i>
+              </div>
+              Quick Stats
+            </div>
+          </div>
+          <div class="section-card-body">
+            <div class="quick-stat-item">
+              <span class="quick-stat-label">
+                <i class="fas fa-graduation-cap" style="color:#7c3aed"></i> Enrolled
+              </span>
+              <span class="quick-stat-val" id="qs-total">—</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-label">
+                <i class="fas fa-star" style="color:#f59e0b"></i> Top Score
+              </span>
+              <span class="quick-stat-val" id="qs-top">—</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-label">
+                <i class="fas fa-chart-bar" style="color:#10b981"></i> Class Avg
+              </span>
+              <span class="quick-stat-val" id="qs-avg">—</span>
+            </div>
+            <div class="quick-stat-item">
+              <span class="quick-stat-label">
+                <i class="fas fa-code-branch" style="color:#06b6d4"></i> Branches
+              </span>
+              <span class="quick-stat-val" id="qs-branches">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.dashboard-grid -->
+    </div><!-- /#page-dashboard -->
+
+
+    <!-- ═══════════════════════════════════════════════
+         PAGE 2 — STUDENTS TABLE
+    ════════════════════════════════════════════════ -->
+    <div class="page" id="page-students">
+
+      <!-- Page heading -->
+      <div class="page-header">
+        <h1>Student Records</h1>
+        <p>Search, filter and manage all enrolled students</p>
+      </div>
+
+      <!-- Toolbar: search + filters + refresh -->
+      <div class="toolbar">
+
+        <!-- Search box -->
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by name or branch…"
+          />
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-group">
+          <select id="filterYear">
+            <option value="">All Years</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+
+          <select id="sortBy">
+            <option value="">Sort by…</option>
+            <option value="marks-desc">Marks ↓</option>
+            <option value="marks-asc">Marks ↑</option>
+            <option value="name-asc">Name A–Z</option>
+            <option value="name-desc">Name Z–A</option>
+          </select>
+
+          <button class="btn btn-primary" id="refreshBtn" onclick="loadStudents()">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+
+      </div><!-- /.toolbar -->
+
+      <!-- Students Table -->
+      <div class="table-wrap">
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student</th>
+              <th>Branch</th>
+              <th>Year</th>
+              <th>Marks</th>
+              <th>Grade</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody">
+            <!-- Rows injected by app.js -->
+            <tr>
+              <td colspan="7" class="loading-cell">
+                <i class="fas fa-spinner fa-spin"></i> Loading students…
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /.table-wrap -->
+
+    </div><!-- /#page-students -->
+
+
+    <!-- ═══════════════════════════════════════════════
+         PAGE 3 — ADD STUDENT FORM
+    ════════════════════════════════════════════════ -->
+    <div class="page" id="page-add">
+
+      <!-- Page heading -->
+      <div class="page-header">
+        <h1>Add New Student</h1>
+        <p>Enroll a new student into the system</p>
+      </div>
+
+      <!-- Form card wrapper -->
+      <div class="form-outer">
+        <div class="form-card">
+
+          <!-- Card Header -->
+          <div class="form-card-header">
+            <div class="form-header-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="form-header-text">
+              <h2>Student Enrollment</h2>
+              <p>Fill in the details below to register a new student</p>
+            </div>
+          </div>
+
+          <!-- Enrollment Form -->
+          <form id="addStudentForm" class="student-form" novalidate>
+
+            <div class="form-grid">
+
+              <!-- Full Name -->
+              <div class="form-group">
+                <label for="newName">
+                  <i class="fas fa-user"></i> Full Name
+                </label>
+                <input
+                  type="text"
+                  id="newName"
+                  placeholder="e.g. Alice Johnson"
+                  required
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Branch -->
+              <div class="form-group">
+                <label for="newBranch">
+                  <i class="fas fa-code-branch"></i> Branch
+                </label>
+                <select id="newBranch" required>
+                  <option value="">Select branch…</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Information Science">Information Science</option>
+                </select>
+              </div>
+
+              <!-- Academic Year -->
+              <div class="form-group">
+                <label for="newYear">
+                  <i class="fas fa-calendar-alt"></i> Academic Year
+                </label>
+                <select id="newYear" required>
+                  <option value="">Select year…</option>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                </select>
+              </div>
+
+              <!-- Marks -->
+              <div class="form-group">
+                <label for="newMarks">
+                  <i class="fas fa-percent"></i> Marks (0–100)
+                </label>
+                <input
+                  type="number"
+                  id="newMarks"
+                  placeholder="e.g. 85"
+                  min="0"
+                  max="100"
+                  required
+                />
+              </div>
+
+            </div><!-- /.form-grid -->
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+              <i class="fas fa-plus-circle"></i> Enroll Student
+            </button>
+
+            <!-- Toast notification for success/error -->
+            <div class="form-toast" id="formToast"></div>
+
+          </form><!-- /#addStudentForm -->
+
+        </div><!-- /.form-card -->
+      </div><!-- /.form-outer -->
+
+    </div><!-- /#page-add -->
+
+
+  </main><!-- /.main -->
+
+
+  <!-- ═══════════════════════════════════════════════
+       DELETE CONFIRMATION MODAL
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+      <div class="modal-icon-wrap">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+      <h3 id="modalHeading">Delete Student?</h3>
+      <p id="modalText">
+        This will permanently remove the student from the database. This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modalCancel">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button class="btn btn-danger" id="modalConfirm">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── JavaScript (Day 8 & 9) ──────────────── -->
+  <script src="app.js"></script>
+
+</body>
+</html>
