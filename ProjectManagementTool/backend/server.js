@@ -18,8 +18,10 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Import Routes ────────────────────────────────────────────
-const authRoutes = require("./routes/authRoutes");
-// projectRoutes, taskRoutes, userRoutes → added Day 4 & 5
+const authRoutes    = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const userRoutes    = require("./routes/userRoutes");
+// taskRoutes → added Day 5
 
 // ─── Middleware ───────────────────────────────────────────────
 app.use(cors());
@@ -37,13 +39,13 @@ app.get("/", (_req, res) => {
   res.json({
     status:  "OK",
     message: "ProjectIQ API is running 🚀",
-    version: "3.0.0",
+    version: "4.0.0",
     uptime:  `${Math.floor(process.uptime())}s`,
     endpoints: {
       auth:     "/api/auth",
-      projects: "/api/projects  (Day 4)",
-      tasks:    "/api/tasks     (Day 5)",
-      users:    "/api/users     (Day 4)",
+      projects: "/api/projects",
+      tasks:    "/api/tasks  (Day 5)",
+      users:    "/api/users",
     },
   });
 });
@@ -60,9 +62,9 @@ app.get("/health", (_req, res) => {
 //  API ROUTES
 // ════════════════════════════════════════════════════════════
 app.use("/api/auth",     authRoutes);
-// app.use("/api/projects", projectRoutes);  // Day 4
-// app.use("/api/tasks",    taskRoutes);     // Day 5
-// app.use("/api/users",    userRoutes);     // Day 4
+app.use("/api/projects", projectRoutes);
+app.use("/api/users",    userRoutes);
+// app.use("/api/tasks", taskRoutes);  // Day 5
 
 // ─── 404 Handler ─────────────────────────────────────────────
 app.use((_req, res) => {
@@ -80,10 +82,12 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("╔══════════════════════════════════════════════╗");
-    console.log("║   ProjectIQ API  —  Day 3 Build              ║");
-    console.log(`║   Server  →  http://localhost:${PORT}           ║`);
-    console.log("║   MongoDB →  Connected ✅                    ║");
-    console.log("║   Auth    →  /api/auth  ✅                   ║");
+    console.log("║   ProjectIQ API  —  Day 4 Build              ║");
+    console.log(`║   Server   →  http://localhost:${PORT}          ║`);
+    console.log("║   MongoDB  →  Connected ✅                   ║");
+    console.log("║   Auth     →  /api/auth      ✅              ║");
+    console.log("║   Projects →  /api/projects  ✅              ║");
+    console.log("║   Users    →  /api/users     ✅              ║");
     console.log("║   Author  →  Krishna | VTU Internship 2026   ║");
     console.log("╚══════════════════════════════════════════════╝");
     app.listen(PORT);
