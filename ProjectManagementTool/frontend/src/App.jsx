@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 //  src/App.jsx — Root App Component
-//  Day 6: AuthProvider + Router + ProtectedRoute + Auth pages
+//  Day 8: AuthProvider + Router + ProtectedRoute + Auth pages + Layout
 //  Project: ProjectIQ Management Tool
 //  Author:  Krishna | VTU Internship 2026
 // ═══════════════════════════════════════════════════════════
@@ -8,12 +8,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute  from "./components/ProtectedRoute";
+import Layout          from "./components/Layout";
 
-// ─── Auth Pages (Day 6) ───────────────────────────────────
+// ─── Pages ───────────────────────────────────────────────
 import Login    from "./pages/Login";
 import Register from "./pages/Register";
+import Tasks    from "./pages/Tasks";
 
-// ─── Coming Soon Placeholder (Days 7-9) ──────────────────
+// ─── Coming Soon Placeholder ─────────────────────────────
 function ComingSoon({ page }) {
   return (
     <div style={{
@@ -21,34 +23,15 @@ function ComingSoon({ page }) {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      minHeight: "100vh",
+      height: "100%",
       background: "#0f1117",
       color: "#fff",
       fontFamily: "'Inter', sans-serif",
       gap: "16px",
+      borderRadius: "16px"
     }}>
-      <div style={{
-        background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-        padding: "3px",
-        borderRadius: "20px",
-      }}>
-        <div style={{
-          background: "#0f1117",
-          borderRadius: "18px",
-          padding: "40px 60px",
-          textAlign: "center",
-        }}>
-          <h1 style={{ fontSize: "2.2rem", fontWeight: 800, marginBottom: "8px" }}>
-            ⚡ ProjectIQ
-          </h1>
-          <p style={{ color: "#6366f1", fontSize: "1rem", fontWeight: 600 }}>
-            {page} — Coming Day 7
-          </p>
-          <p style={{ color: "#64748b", marginTop: "12px", fontSize: "0.85rem" }}>
-            Day 6 Auth Complete ✅
-          </p>
-        </div>
-      </div>
+      <h1 style={{ fontSize: "2.2rem", fontWeight: 800 }}>⚡ ProjectIQ</h1>
+      <p style={{ color: "#6366f1", fontSize: "1rem" }}>{page} — Coming Soon</p>
     </div>
   );
 }
@@ -63,39 +46,20 @@ export default function App() {
           <Route path="/login"    element={<Login    />} />
           <Route path="/register" element={<Register />} />
 
-          {/* ── Protected App Routes ──────────────────── */}
+          {/* ── Protected App Routes (Wrapped in Layout) ─ */}
           <Route
             path="/"
             element={
               <ProtectedRoute>
-                <ComingSoon page="Dashboard" />
+                <Layout />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/projects"
-            element={
-              <ProtectedRoute>
-                <ComingSoon page="Projects" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/tasks"
-            element={
-              <ProtectedRoute>
-                <ComingSoon page="Tasks (Kanban)" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/team"
-            element={
-              <ProtectedRoute>
-                <ComingSoon page="Team" />
-              </ProtectedRoute>
-            }
-          />
+          >
+            <Route index          element={<ComingSoon page="Dashboard" />} />
+            <Route path="projects" element={<ComingSoon page="Projects" />} />
+            <Route path="tasks"    element={<Tasks />} />
+            <Route path="team"     element={<ComingSoon page="Team" />} />
+          </Route>
 
           {/* ── 404 Fallback ──────────────────────────── */}
           <Route path="*" element={<Navigate to="/" replace />} />
