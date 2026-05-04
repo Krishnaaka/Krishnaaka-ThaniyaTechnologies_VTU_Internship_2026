@@ -38,8 +38,8 @@ app.use((req, _res, next) => {
 app.get("/", (_req, res) => {
   res.json({
     status:  "OK",
-    message: "ProjectIQ API is running 🚀",
-    version: "5.0.0",
+    message: "Project Management API is running 🚀",
+    version: "1.0.0",
     uptime:  `${Math.floor(process.uptime())}s`,
     endpoints: {
       auth:     "/api/auth",
@@ -82,7 +82,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("╔══════════════════════════════════════════════╗");
-    console.log("║   ProjectIQ API  —  Day 5 Build              ║");
+    console.log("║   Project Management API  —  Final Build     ║");
     console.log(`║   Server   →  http://localhost:${PORT}          ║`);
     console.log("║   MongoDB  →  Connected ✅                   ║");
     console.log("║   Auth     →  /api/auth      ✅              ║");

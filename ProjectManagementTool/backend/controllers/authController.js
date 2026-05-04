@@ -64,7 +64,7 @@ const register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Account created successfully! Welcome to ProjectIQ 🎉",
+      message: "Account created successfully! Welcome to Project Management Tool 🎉",
       token,
       user:    userResponse(user),
     });

@@ -6,61 +6,93 @@
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import { useToast } from "../context/ToastContext";
 import KanbanBoard from "../components/KanbanBoard";
 import "./Tasks.css";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [currentProject, setCurrentProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newTask, setNewTask] = useState({ title: "", description: "", priority: "medium" });
+  const { addToast } = useToast();
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("project");
+  const navigate = useNavigate();
 
-  // Fetch all tasks
-  const fetchTasks = async () => {
+  const [newTask, setNewTask] = useState({ 
+    title: "", 
+    description: "", 
+    priority: "medium",
+    project: projectId || ""
+  });
+
+  // ─── Fetch Data ──────────────────────────────────────────
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get("/tasks");
-      // ensure we just get tasks. If the backend returns { count, data: tasks } handle it:
-      const taskList = Array.isArray(data.data) ? data.data : data; 
-      setTasks(taskList);
+      const [taskRes, projRes] = await Promise.all([
+        API.get(projectId ? `/tasks?project=${projectId}` : "/tasks"),
+        API.get("/projects")
+      ]);
+
+      setTasks(taskRes.data.data || []);
+      setProjects(projRes.data.data || []);
+
+      if (projectId) {
+        const found = projRes.data.data.find(p => p._id === projectId);
+        setCurrentProject(found);
+      } else {
+        setCurrentProject(null);
+      }
     } catch (err) {
-      console.error("Error fetching tasks:", err);
+      addToast("Error", "Failed to fetch data", "error");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    fetchData();
+  }, [projectId]);
 
-  // Handle Drag-and-Drop Task Move
+  useEffect(() => {
+    if (projectId) {
+      setNewTask(prev => ({ ...prev, project: projectId }));
+    }
+  }, [projectId]);
+
+  // ─── Handlers ──────────────────────────────────────────
   const handleTaskMove = async (taskId, newStatus) => {
-    // Optimistic UI Update
     setTasks((prev) => 
       prev.map((t) => (t._id === taskId ? { ...t, status: newStatus } : t))
     );
-
     try {
       await API.patch(`/tasks/${taskId}/status`, { status: newStatus });
+      addToast("Status Updated", `Task moved to ${newStatus}`, "info");
     } catch (err) {
-      console.error("Failed to update status:", err);
-      // Revert if failed
-      fetchTasks();
+      addToast("Error", "Failed to update status", "error");
+      fetchData();
     }
   };
 
-  // Handle Form Submission for New Task
   const handleCreateTask = async (e) => {
     e.preventDefault();
+    if (!newTask.project) {
+      addToast("Required", "Please select a project", "error");
+      return;
+    }
     try {
       await API.post("/tasks", newTask);
+      addToast("Success", "Task created successfully!", "success");
       setIsModalOpen(false);
-      setNewTask({ title: "", description: "", priority: "medium" });
-      fetchTasks();
+      setNewTask({ title: "", description: "", priority: "medium", project: projectId || "" });
+      fetchData();
     } catch (err) {
-      console.error("Failed to create task:", err);
+      addToast("Error", "Failed to create task", "error");
     }
   };
 
@@ -68,16 +100,32 @@ export default function Tasks() {
     <div className="tasks-page">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Task Board</h1>
-          <p className="page-subtitle">Manage your project tasks</p>
+          <h1 className="page-title">
+            {currentProject ? `Tasks: ${currentProject.title}` : "All Tasks"}
+          </h1>
+          <p className="page-subtitle">
+            {currentProject ? currentProject.description : "Manage tasks across all projects"}
+          </p>
         </div>
-        <button className="primary-btn" onClick={() => setIsModalOpen(true)}>
-          <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>+</span> Add Task
-        </button>
+        <div style={{ display: "flex", gap: "12px" }}>
+          {!projectId && (
+            <select 
+              className="auth-input" 
+              style={{ width: "200px", marginBottom: 0 }}
+              onChange={(e) => e.target.value ? navigate(`/tasks?project=${e.target.value}`) : navigate("/tasks")}
+            >
+              <option value="">Filter by Project...</option>
+              {projects.map(p => <option key={p._id} value={p._id}>{p.title}</option>)}
+            </select>
+          )}
+          <button className="primary-btn" onClick={() => setIsModalOpen(true)}>
+            <span>+</span> Add Task
+          </button>
+        </div>
       </div>
 
       {loading ? (
-        <div style={{ textAlign: "center", marginTop: "50px", color: "var(--primary)" }}>
+        <div style={{ textAlign: "center", marginTop: "50px", color: "#6366f1" }}>
           Loading tasks...
         </div>
       ) : (
@@ -88,7 +136,10 @@ export default function Tasks() {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Create New Task</h2>
+            <div className="modal-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 style={{ color: "#fff", margin: 0 }}>Create New Task</h2>
+              <button onClick={() => setIsModalOpen(false)} style={{ background: "transparent", border: "none", color: "#94a3b8", fontSize: "1.5rem", cursor: "pointer" }}>&times;</button>
+            </div>
             <form onSubmit={handleCreateTask} className="modal-form">
               <div className="auth-field">
                 <label className="auth-label">Title</label>
@@ -98,7 +149,6 @@ export default function Tasks() {
                   value={newTask.title}
                   onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                   required
-                  autoFocus
                 />
               </div>
               <div className="auth-field">
@@ -110,24 +160,39 @@ export default function Tasks() {
                   rows="3"
                 ></textarea>
               </div>
-              <div className="auth-field">
-                <label className="auth-label">Priority</label>
-                <select 
-                  className="auth-input"
-                  value={newTask.priority}
-                  onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
+              <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+                <div className="auth-field" style={{ marginBottom: 0 }}>
+                  <label className="auth-label">Priority</label>
+                  <select 
+                    className="auth-input"
+                    value={newTask.priority}
+                    onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div className="auth-field" style={{ marginBottom: 0 }}>
+                  <label className="auth-label">Project</label>
+                  <select 
+                    className="auth-input"
+                    value={newTask.project}
+                    onChange={(e) => setNewTask({ ...newTask, project: e.target.value })}
+                    required
+                    disabled={!!projectId}
+                  >
+                    <option value="">Select Project...</option>
+                    {projects.map(p => <option key={p._id} value={p._id}>{p.title}</option>)}
+                  </select>
+                </div>
               </div>
               
-              <div className="modal-actions">
-                <button type="button" className="btn-cancel" onClick={() => setIsModalOpen(false)}>
+              <div className="modal-footer" style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "24px" }}>
+                <button type="button" className="btn-secondary" onClick={() => setIsModalOpen(false)}>
                   Cancel
                 </button>
-                <button type="submit" className="primary-btn">
+                <button type="submit" className="btn-primary">
                   Create Task
                 </button>
               </div>

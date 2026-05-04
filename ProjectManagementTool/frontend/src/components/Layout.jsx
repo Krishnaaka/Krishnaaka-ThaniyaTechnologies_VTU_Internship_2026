@@ -18,7 +18,7 @@ export default function Layout() {
       <aside className="sidebar">
         <div className="sidebar-header">
           <span className="sidebar-logo-icon">⚡</span>
-          <span className="sidebar-logo-text">ProjectIQ</span>
+          <span className="sidebar-logo-text">Project Management</span>
         </div>
 
         <nav className="sidebar-nav">

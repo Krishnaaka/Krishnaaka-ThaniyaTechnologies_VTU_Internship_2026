@@ -36,7 +36,7 @@ export default function ProtectedRoute({ children }) {
         }} />
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         <p style={{ color: "#6366f1", fontFamily: "Inter, sans-serif", fontSize: "0.9rem" }}>
-          Loading ProjectIQ…
+          Loading Project Management Tool…
         </p>
       </div>
     );

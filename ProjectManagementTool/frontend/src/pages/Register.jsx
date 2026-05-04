@@ -92,7 +92,7 @@ export default function Register() {
         {/* Logo */}
         <div className="auth-logo">
           <span className="auth-logo__icon">⚡</span>
-          <span className="auth-logo__text">ProjectIQ</span>
+          <span className="auth-logo__text">Project Management</span>
         </div>
 
         <h1 className="auth-title">Create your account</h1>
@@ -230,7 +230,7 @@ export default function Register() {
           </Link>
         </p>
 
-        <p className="auth-badge">VTU Internship 2026 · Day 6</p>
+        <p className="auth-badge">VTU Internship 2026 · Day 10</p>
       </div>
     </div>
   );
