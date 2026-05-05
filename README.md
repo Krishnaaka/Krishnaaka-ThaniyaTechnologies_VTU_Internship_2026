@@ -2,7 +2,7 @@
 
 This is a minimal client-side user management UI. It stores data in `localStorage` and supports add/edit/delete.
 
-Usage
+Usage of Student how easily they can access the features 
 
 - Open `index.html` in your browser (double-click or use "Open With Live Server").
 - The app seeds sample users on first load.
