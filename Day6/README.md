@@ -3,7 +3,7 @@
 ## Overview
 A simple frontend extension for an existing student dashboard. This project demonstrates building an interactive dashboard for students to view and manage their academic information.
 
-## Features
+## Features for the students they add their problems 
 - 📚 **Course Management** - View enrolled courses and grades
 - 👤 **Student Profile** - Display student information and statistics
 - 📊 **Performance Analytics** - Visual representation of academic performance
