@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  src/pages/Tasks.jsx
-//  Day 8: Tasks Page with Kanban Board and Create Form
-//  Project: ProjectIQ Management Tool
+//  Day 10: Tasks Page with Kanban Board + Edit & Delete
+//  Project: Project Management Tool
 //  Author:  Krishna | VTU Internship 2026
 // ═══════════════════════════════════════════════════════════
 
@@ -18,6 +18,7 @@ export default function Tasks() {
   const [currentProject, setCurrentProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { addToast } = useToast();
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("project");
@@ -28,6 +29,14 @@ export default function Tasks() {
     description: "", 
     priority: "medium",
     project: projectId || ""
+  });
+
+  const [editTask, setEditTask] = useState({
+    _id: "",
+    title: "",
+    description: "",
+    priority: "medium",
+    status: "todo"
   });
 
   // ─── Fetch Data ──────────────────────────────────────────
@@ -96,6 +105,47 @@ export default function Tasks() {
     }
   };
 
+  // ─── Edit Handler ──────────────────────────────────────
+  const handleEditClick = (task) => {
+    setEditTask({
+      _id: task._id,
+      title: task.title,
+      description: task.description || "",
+      priority: task.priority || "medium",
+      status: task.status || "todo"
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await API.put(`/tasks/${editTask._id}`, {
+        title: editTask.title,
+        description: editTask.description,
+        priority: editTask.priority,
+        status: editTask.status
+      });
+      addToast("Updated", `Task "${editTask.title}" updated!`, "success");
+      setIsEditModalOpen(false);
+      fetchData();
+    } catch (err) {
+      addToast("Error", "Failed to update task", "error");
+    }
+  };
+
+  // ─── Delete Handler ────────────────────────────────────
+  const handleDeleteClick = async (task) => {
+    if (!window.confirm(`Delete task "${task.title}"? This cannot be undone.`)) return;
+    try {
+      await API.delete(`/tasks/${task._id}`);
+      addToast("Deleted", `Task "${task.title}" removed`, "info");
+      fetchData();
+    } catch (err) {
+      addToast("Error", "Failed to delete task", "error");
+    }
+  };
+
   return (
     <div className="tasks-page">
       <div className="page-header">
@@ -129,10 +179,15 @@ export default function Tasks() {
           Loading tasks...
         </div>
       ) : (
-        <KanbanBoard tasks={tasks} onTaskMove={handleTaskMove} />
+        <KanbanBoard 
+          tasks={tasks} 
+          onTaskMove={handleTaskMove} 
+          onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
+        />
       )}
 
-      {/* ── Add Task Modal ── */}
+      {/* ── Create Task Modal ── */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -194,6 +249,74 @@ export default function Tasks() {
                 </button>
                 <button type="submit" className="btn-primary">
                   Create Task
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── Edit Task Modal ── */}
+      {isEditModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2 style={{ color: "#fff", margin: 0 }}>✏️ Edit Task</h2>
+              <button onClick={() => setIsEditModalOpen(false)} style={{ background: "transparent", border: "none", color: "#94a3b8", fontSize: "1.5rem", cursor: "pointer" }}>&times;</button>
+            </div>
+            <form onSubmit={handleEditSubmit} className="modal-form">
+              <div className="auth-field">
+                <label className="auth-label">Title</label>
+                <input 
+                  type="text" 
+                  className="auth-input"
+                  value={editTask.title}
+                  onChange={(e) => setEditTask({ ...editTask, title: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="auth-field">
+                <label className="auth-label">Description</label>
+                <textarea 
+                  className="auth-input"
+                  value={editTask.description}
+                  onChange={(e) => setEditTask({ ...editTask, description: e.target.value })}
+                  rows="3"
+                ></textarea>
+              </div>
+              <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "20px" }}>
+                <div className="auth-field" style={{ marginBottom: 0 }}>
+                  <label className="auth-label">Priority</label>
+                  <select 
+                    className="auth-input"
+                    value={editTask.priority}
+                    onChange={(e) => setEditTask({ ...editTask, priority: e.target.value })}
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div className="auth-field" style={{ marginBottom: 0 }}>
+                  <label className="auth-label">Status</label>
+                  <select 
+                    className="auth-input"
+                    value={editTask.status}
+                    onChange={(e) => setEditTask({ ...editTask, status: e.target.value })}
+                  >
+                    <option value="todo">To Do</option>
+                    <option value="inprogress">In Progress</option>
+                    <option value="done">Done</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="modal-footer" style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "24px" }}>
+                <button type="button" className="btn-secondary" onClick={() => setIsEditModalOpen(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary">
+                  Save Changes
                 </button>
               </div>
             </form>

@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  src/components/KanbanBoard.jsx
-//  Day 8: Drag-and-drop Kanban Board
-//  Project: ProjectIQ Management Tool
+//  Day 10: Drag-and-drop Kanban Board with Edit/Delete
+//  Project: Project Management Tool
 //  Author:  Krishna | VTU Internship 2026
 // ═══════════════════════════════════════════════════════════
 
@@ -14,11 +14,11 @@ const COLUMNS = [
   { id: "done", title: "Done", dotClass: "status-done" },
 ];
 
-export default function KanbanBoard({ tasks, onTaskMove }) {
+export default function KanbanBoard({ tasks, onTaskMove, onEdit, onDelete }) {
   const [draggedOverCol, setDraggedOverCol] = useState(null);
 
   const handleDragOver = (e, colId) => {
-    e.preventDefault(); // Necessary to allow dropping
+    e.preventDefault();
     setDraggedOverCol(colId);
   };
 
@@ -32,7 +32,6 @@ export default function KanbanBoard({ tasks, onTaskMove }) {
     const taskId = e.dataTransfer.getData("taskId");
     const sourceStatus = e.dataTransfer.getData("sourceStatus");
 
-    // Only update if moving to a different column
     if (taskId && sourceStatus !== colId) {
       onTaskMove(taskId, colId);
     }
@@ -61,7 +60,12 @@ export default function KanbanBoard({ tasks, onTaskMove }) {
             </div>
             <div className="column-body">
               {colTasks.map((task) => (
-                <TaskCard key={task._id} task={task} />
+                <TaskCard 
+                  key={task._id} 
+                  task={task} 
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
               ))}
               {colTasks.length === 0 && (
                 <div style={{ color: "var(--text-muted)", textAlign: "center", padding: "20px" }}>

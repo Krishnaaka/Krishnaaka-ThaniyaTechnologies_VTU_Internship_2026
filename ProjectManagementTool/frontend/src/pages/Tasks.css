@@ -256,3 +256,46 @@
   padding: 10px 20px;
   border-radius: var(--radius-md);
 }
+
+/* ── Task Card Action Buttons ── */
+.task-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.task-card-top .task-priority {
+  margin-bottom: 0;
+}
+
+.task-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.task-card:hover .task-actions {
+  opacity: 1;
+}
+
+.task-action-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-action-btn:hover {
+  background: rgba(99,102,241,0.15);
+  border-color: var(--primary);
+}
+
+.task-action-delete:hover {
+  background: rgba(239,68,68,0.15);
+  border-color: var(--danger);
+}

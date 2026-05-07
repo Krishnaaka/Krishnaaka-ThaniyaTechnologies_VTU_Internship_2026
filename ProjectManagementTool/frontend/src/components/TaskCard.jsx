@@ -1,11 +1,11 @@
 // ═══════════════════════════════════════════════════════════
 //  src/components/TaskCard.jsx
-//  Day 8: Kanban Draggable Task Card
-//  Project: ProjectIQ Management Tool
+//  Day 10: Kanban Draggable Task Card with Edit & Delete
+//  Project: Project Management Tool
 //  Author:  Krishna | VTU Internship 2026
 // ═══════════════════════════════════════════════════════════
 
-export default function TaskCard({ task, onDragStart }) {
+export default function TaskCard({ task, onDragStart, onEdit, onDelete }) {
   const priorityClass = `priority-${task.priority || "medium"}`;
   
   // Format deadline if exists
@@ -24,14 +24,19 @@ export default function TaskCard({ task, onDragStart }) {
       className="task-card"
       draggable
       onDragStart={(e) => {
-        // Pass task id and current status to the dataTransfer
         e.dataTransfer.setData("taskId", task._id);
         e.dataTransfer.setData("sourceStatus", task.status);
         if (onDragStart) onDragStart(task);
       }}
     >
-      <div className={`task-priority ${priorityClass}`}>
-        {task.priority || "medium"}
+      <div className="task-card-top">
+        <div className={`task-priority ${priorityClass}`}>
+          {task.priority || "medium"}
+        </div>
+        <div className="task-actions">
+          <button className="task-action-btn" title="Edit" onClick={() => onEdit && onEdit(task)}>✏️</button>
+          <button className="task-action-btn task-action-delete" title="Delete" onClick={() => onDelete && onDelete(task)}>🗑️</button>
+        </div>
       </div>
       <h3 className="task-title">{task.title}</h3>
       {task.description && <p className="task-desc">{task.description}</p>}
